@@ -1,0 +1,50 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36429.23 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HeadacheTracker.Maui", "HeadacheTracker\HeadacheTracker.Maui.csproj", "{F5A0E550-BD50-4B14-B3F9-906A287A8B24}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HeadacheTracker.Domain", "HeadacheTracker.Domain\HeadacheTracker.Domain.csproj", "{CC360D46-8407-4C7C-A40D-7A8F7BBC54BB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HeadacheTracker.Application", "HeadacheTracker.Application\HeadacheTracker.Application.csproj", "{B27202A6-1A13-47F2-BD3C-629FFD5FCDDF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HeadacheTracker.Infrastructure", "HeadacheTracker.Infrastructure\HeadacheTracker.Infrastructure.csproj", "{71344EC0-08F1-4786-93F0-B398D996016A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HeadacheTracker.Core", "HeadacheTracker.Core\HeadacheTracker.Core.csproj", "{29EE890B-98B5-4A10-9593-890726E891AA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F5A0E550-BD50-4B14-B3F9-906A287A8B24}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F5A0E550-BD50-4B14-B3F9-906A287A8B24}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F5A0E550-BD50-4B14-B3F9-906A287A8B24}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{F5A0E550-BD50-4B14-B3F9-906A287A8B24}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F5A0E550-BD50-4B14-B3F9-906A287A8B24}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CC360D46-8407-4C7C-A40D-7A8F7BBC54BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CC360D46-8407-4C7C-A40D-7A8F7BBC54BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CC360D46-8407-4C7C-A40D-7A8F7BBC54BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CC360D46-8407-4C7C-A40D-7A8F7BBC54BB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B27202A6-1A13-47F2-BD3C-629FFD5FCDDF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B27202A6-1A13-47F2-BD3C-629FFD5FCDDF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B27202A6-1A13-47F2-BD3C-629FFD5FCDDF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B27202A6-1A13-47F2-BD3C-629FFD5FCDDF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{71344EC0-08F1-4786-93F0-B398D996016A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{71344EC0-08F1-4786-93F0-B398D996016A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{71344EC0-08F1-4786-93F0-B398D996016A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{71344EC0-08F1-4786-93F0-B398D996016A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{29EE890B-98B5-4A10-9593-890726E891AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{29EE890B-98B5-4A10-9593-890726E891AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{29EE890B-98B5-4A10-9593-890726E891AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{29EE890B-98B5-4A10-9593-890726E891AA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {CECDAECF-2B23-4A88-BC43-A5291D997D59}
+	EndGlobalSection
+EndGlobal

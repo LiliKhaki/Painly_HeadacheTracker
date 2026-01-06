@@ -1,0 +1,167 @@
+﻿<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:HeadacheTracker.Maui.ViewModels"
+             xmlns:converters="clr-namespace:HeadacheTracker.Maui.Converters"
+             xmlns:local="clr-namespace:HeadacheTracker.Maui.Resources.Strings"
+
+             x:Class="HeadacheTracker.Maui.MainPage">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:CalendarStrokeConverter x:Key="CalendarStrokeConverter"/>
+            <converters:CalendarBackgroundConverter x:Key="CalendarBackgroundConverter"/>
+            <converters:BoolToOpacityConverter x:Key="BoolToOpacityConverter" />
+            <converters:StringToBoolConverter x:Key="StringToBoolConverter"/>
+            <converters:NullableDoubleToBoolConverter x:Key="NullableDoubleToBoolConverter"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+
+
+    <ScrollView>
+        <VerticalStackLayout Padding="10">
+
+            <Button Text="{x:Static local:AppResources.Statistics}"
+    FontSize="20"
+    FontAttributes="Bold"
+    Command="{Binding OpenStatisticsCommand}" />
+
+        <HorizontalStackLayout HorizontalOptions="Center" Spacing="20" Margin="0,0,0,10">
+            <Button Text="◀" Command="{Binding PreviousMonthCommand}" />
+            <Label Text="{Binding CurrentMonthName}"
+               FontSize="20"
+               HorizontalOptions="Center"
+               VerticalOptions="Center" />
+            <Button Text="▶" Command="{Binding NextMonthCommand}" />
+        </HorizontalStackLayout>
+
+        <Grid ColumnDefinitions="*,*,*,*,*,*,*" Padding="0,10,0,5" Margin="0,0,0,10">
+                <Label Text="{x:Static local:AppResources.MondayShort}" HorizontalOptions="Center" FontAttributes="Bold" />
+                <Label Text="{x:Static local:AppResources.TuesdayShort}" Grid.Column="1" HorizontalOptions="Center" FontAttributes="Bold" />
+                <Label Text="{x:Static local:AppResources.WednesdayShort}" Grid.Column="2" HorizontalOptions="Center" FontAttributes="Bold" />
+                <Label Text="{x:Static local:AppResources.ThursdayShort}" Grid.Column="3" HorizontalOptions="Center" FontAttributes="Bold" />
+                <Label Text="{x:Static local:AppResources.FridayShort}" Grid.Column="4" HorizontalOptions="Center" FontAttributes="Bold" />
+                <Label Text="{x:Static local:AppResources.SaturdayShort}" Grid.Column="5" HorizontalOptions="Center" TextColor="Gray" />
+                <Label Text="{x:Static local:AppResources.SundayShort}" Grid.Column="6" HorizontalOptions="Center" TextColor="Gray" />
+        </Grid>
+
+
+
+        <!-- Календарная сетка -->
+        <CollectionView ItemsSource="{Binding Days}"
+                           SelectionMode="Single"
+                SelectedItem="{Binding SelectedDay, Mode=TwoWay}">
+            <CollectionView.ItemsLayout>
+                <GridItemsLayout Orientation="Vertical" Span="7" />
+            </CollectionView.ItemsLayout>
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Border Padding="5" Margin="2"
+        StrokeShape="RoundRectangle 12"
+        StrokeThickness="4">
+                        <Border.Background>
+                            <MultiBinding Converter="{StaticResource CalendarBackgroundConverter}">
+                                <Binding Path="HasEntry" />
+                                <Binding Path="IsToday" />
+                                <Binding Path="IsSelected" />
+                            </MultiBinding>
+                        </Border.Background>
+
+                        <Border.Stroke>
+                            <MultiBinding Converter="{StaticResource CalendarStrokeConverter}">
+                                <Binding Path="HasEntry" />
+                                <Binding Path="IsToday" />
+                                <Binding Path="IsSelected" />
+                            </MultiBinding>
+                        </Border.Stroke>
+
+
+                        <Label Text="{Binding Date.Day}"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center" 
+                               FontAttributes="None"
+                               TextColor="Black"
+                               Opacity="{Binding IsFromCurrentMonth, Converter={StaticResource BoolToOpacityConverter}}"/>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <!-- Разделитель -->
+        <BoxView HeightRequest="1" Color="Gray" Margin="0,10,0,10" />
+
+        <!-- Область под календарём -->
+        <Grid ColumnDefinitions="2*,*" RowDefinitions="Auto">
+
+            <!-- Левая часть: записи за день -->
+            <VerticalStackLayout Grid.Column="0" Spacing="10">
+                    <Label Text="{x:Static local:AppResources.SavedRecords}"
+           FontAttributes="Bold"
+           FontSize="18" />
+
+                <CollectionView ItemsSource="{Binding HeadacheEntriesForSelectedDay}"
+                                HeightRequest="200"
+                SelectionMode="Single"
+                SelectedItem="{Binding SelectedHeadacheEntry, Mode=TwoWay}"
+                >
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Border Margin="2"
+                    Padding="6"
+                    Stroke="#ddd"                        
+                                StrokeThickness="1"
+                    StrokeShape="RoundRectangle 8"
+                    BackgroundColor="{AppThemeBinding Light='#FFFFFF', Dark='#1E1E1E'}">
+
+                                <Border.Triggers>
+                                    <DataTrigger TargetType="Border"
+                                 Binding="{Binding IsSelected}"
+                                 Value="True">
+                                        <Setter Property="Stroke" Value="Blue" />
+                                        <Setter Property="StrokeThickness" Value="2" />
+                                        <Setter Property="BackgroundColor" Value="#D0E8FF" />
+                                    </DataTrigger>
+                                </Border.Triggers>
+
+                                    <VerticalStackLayout>
+                                        <!-- Дата и интенсивность -->
+                                        <Label Text="{Binding Date, StringFormat='{0:dd.MM.yyyy}'}" FontAttributes="Bold" />
+                                        <Label Text="{Binding Intensity, StringFormat='Intensity: {0}'}" />
+                                        <Label Text="{Binding Notes}" IsVisible="{Binding Notes, Converter={StaticResource StringToBoolConverter}}" />
+
+                                        <!-- Список медикаментов -->
+                                        <CollectionView ItemsSource="{Binding Medications}" SelectionMode="None">
+                                            <CollectionView.ItemTemplate>
+                                                <DataTemplate>
+                                                    <HorizontalStackLayout Spacing="10">
+                                                        <Label Text="{Binding Medication}" FontAttributes="Bold"/>
+                                                        <Label Text="{Binding Dose, StringFormat='{0} mg'}"/>
+                                                    </HorizontalStackLayout>
+                                                </DataTemplate>
+                                            </CollectionView.ItemTemplate>
+                                        </CollectionView>
+                                    </VerticalStackLayout>
+
+                                </Border>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
+            </VerticalStackLayout>
+
+
+
+
+
+            <!-- Правая часть — кнопки -->
+            <VerticalStackLayout Grid.Column="1" Spacing="10" HorizontalOptions="Center" VerticalOptions="Start">
+                    <Button Text="{x:Static local:AppResources.AddRecord}" Command="{Binding AddRecordCommand}" WidthRequest="120" />
+                    <Button Text="{x:Static local:AppResources.EditRecord}" Command="{Binding EditRecordCommand}" WidthRequest="120" />
+                    <Button Text="{x:Static local:AppResources.DeleteRecord}" Command="{Binding DeleteRecordCommand}" WidthRequest="120" />
+            </VerticalStackLayout>
+        </Grid>
+
+    </VerticalStackLayout>
+        </ScrollView>
+</ContentPage>

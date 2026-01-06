@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<toolkit:Popup
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:local="clr-namespace:HeadacheTracker.Maui.Resources.Strings"
+    
+    x:Class="HeadacheTracker.Maui.Views.AddEntryPopup"
+    HorizontalOptions="Center">
+
+    <ScrollView Orientation="Vertical">
+        <VerticalStackLayout Padding="20" Spacing="12"
+                             HorizontalOptions="Fill"
+                             x:Name="RootLayout">
+
+            <!-- Заголовок -->
+            <Label Text="{Binding Title}"
+                   FontAttributes="Bold"
+                   FontSize="20"
+                   HorizontalOptions="Center" />
+
+            <!-- Интенсивность -->
+            <Entry Placeholder="Intensity"
+                   Keyboard="Numeric"
+                   Text="{Binding Intensity}"
+                   HorizontalOptions="Fill" />
+
+            <!-- Notes -->
+            <Editor Placeholder="Notes"
+                    HeightRequest="100"
+                    Text="{Binding Notes}"
+                    HorizontalOptions="Fill" />
+
+            <!-- Список медикаментов -->
+            <Label Text="{x:Static local:AppResources.Medications}"
+                   FontAttributes="Bold"
+                   Margin="0,10,0,0"/>
+
+            <CollectionView ItemsSource="{Binding Medications}" SelectionMode="None"
+                            HorizontalOptions="Fill">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <HorizontalStackLayout Spacing="10" VerticalOptions="Center" HorizontalOptions="Fill">
+                            <Entry Placeholder="Medication"
+                                   Text="{Binding Name}"
+                                   WidthRequest="150"/>
+                            <Entry Placeholder="Dose"
+                                   Keyboard="Numeric"
+                                   Text="{Binding Dose}"
+                                   WidthRequest="80"/>
+                            <Button Text="X"
+                                    BackgroundColor="Transparent"
+                                    TextColor="Red"
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type toolkit:Popup}}, Path=BindingContext.RemoveMedicationCommand}"
+                                    CommandParameter="{Binding}" />
+                        </HorizontalStackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <!-- Кнопка добавить медикамент -->
+            <Button Text="{x:Static local:AppResources.AddMedication}"
+                    Command="{Binding AddMedicationCommand}"
+                    Margin="0,5,0,10"/>
+
+            <!-- Кнопки сохранить / отменить -->
+            <HorizontalStackLayout Spacing="20" HorizontalOptions="Center">
+                <Button Text="{x:Static local:AppResources.SaveButton}"
+                        Command="{Binding SaveCommand}" WidthRequest="120"/>
+                <Button Text="{x:Static local:AppResources.CancelButton}"
+                        Command="{Binding CancelCommand}" WidthRequest="120"/>
+            </HorizontalStackLayout>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</toolkit:Popup>
