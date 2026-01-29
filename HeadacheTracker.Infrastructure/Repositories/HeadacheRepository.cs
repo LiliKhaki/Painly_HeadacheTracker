@@ -85,5 +85,9 @@ public class HeadacheRepository : IHeadacheRepository
             .ToListAsync();
     }
 
-    
+    public async Task<List<HeadacheEntry>> GetAllAsync()
+    {
+        return await _db.Table<HeadacheEntry>().ToListAsync();
     }
+
+}

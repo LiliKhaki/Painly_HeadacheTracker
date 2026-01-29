@@ -157,12 +157,17 @@ namespace HeadacheTracker.Maui.ViewModels
 
         }
 
-        public async Task InitializeAsync()
+        public void Initialize()
         {
             Debug.WriteLine("InitializeAsync started");
 
-            await LoadMonthAsync();
-            await LoadEntriesForSelectedDayAsync();
+            // Только быстрые вещи
+            Year = DateTime.Today.Year;
+            Month = DateTime.Today.Month;
+
+            // НЕ await
+            _ = LoadMonthAsync();
+            _ = LoadEntriesForSelectedDayAsync();
 
             Debug.WriteLine($"Days count after init: {Days.Count}");
         }
@@ -242,6 +247,16 @@ namespace HeadacheTracker.Maui.ViewModels
         {
             Debug.WriteLine("LoadMonthAsync START");
 
+            // 1️⃣ СНАЧАЛА — пустой календарь
+            var days = GenerateDays(Year, Month, Enumerable.Empty<DateTime>());
+
+            Days.Clear();
+            foreach (var d in days)
+                Days.Add(d);
+
+            Debug.WriteLine("Calendar skeleton rendered");
+
+            // 2️⃣ ПОТОМ — данные
             var entries = new List<HeadacheEntry>();
 
             if (_getHeadaches != null)
@@ -252,18 +267,19 @@ namespace HeadacheTracker.Maui.ViewModels
 
             var entryDates = entries
                 .Select(e => e.Date.Date)
-                .Select(d => DateTime.SpecifyKind(d, DateTimeKind.Unspecified));
+                .Select(d => DateTime.SpecifyKind(d, DateTimeKind.Unspecified))
+                .ToHashSet();
 
-            var days = GenerateDays(Year, Month, entryDates);
+            // 3️⃣ Обновляем существующие дни
+            foreach (var day in Days)
+            {
+                day.HasEntry = entryDates.Contains(day.Date);
+            }
 
-            Days.Clear();
-            foreach (var d in days)
-                Days.Add(d);
-
-            Debug.WriteLine($"Days count after load: {Days.Count}");
-            Debug.WriteLine("LoadMonthAsync КОНЕЦ");
+            Debug.WriteLine("LoadMonthAsync END");
         }
-      
+
+
         void OnPropertyChanged(string name) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
 
         // GenerateDays / LoadMonthAsync в ViewModel

@@ -3,50 +3,56 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:HeadacheTracker.Maui.Views"
+    xmlns:resources="clr-namespace:HeadacheTracker.Maui.Resources.Strings"
     x:Class="HeadacheTracker.Maui.Views.StatisticsPage"
     Title="Statistics">
+    
+    
 
     <ScrollView>
+
+
         <VerticalStackLayout Padding="20" Spacing="15">
+            <Label Text="{Binding PeriodLabel}" FontAttributes="Bold" FontSize="18" HorizontalOptions="Center" />
 
-            <Label Text="Статистика" FontAttributes="Bold" FontSize="24" HorizontalOptions="Center" />
-
-            <!-- Выбор года -->
             <HorizontalStackLayout Spacing="10">
-                <Label Text="Год:" VerticalOptions="Center"/>
+                <Label Text="{x:Static resources:AppResources.Year}" VerticalOptions="Center"/>
                 <Picker ItemsSource="{Binding Years}" SelectedItem="{Binding SelectedYear}" WidthRequest="100"/>
             </HorizontalStackLayout>
 
-            <!-- Выбор месяца -->
             <HorizontalStackLayout Spacing="10">
-                <Label Text="Месяц:" VerticalOptions="Center"/>
-                <Picker ItemsSource="{Binding Months}" SelectedItem="{Binding SelectedMonth}" WidthRequest="150"/>
+                <Label Text="{x:Static resources:AppResources.Month}" VerticalOptions="Center"/>
+              
+                <Picker ItemsSource="{Binding Months}" SelectedIndex="{Binding SelectedMonthIndex}" WidthRequest="150" />
+
             </HorizontalStackLayout>
 
             <!-- Кнопка обновления статистики -->
-            <Button Text="Обновить" Command="{Binding RefreshStatisticsCommand}" />
+            <Button
+    Text="{x:Static resources:AppResources.Refresh}"
+    Command="{Binding RefreshStatisticsCommand}" />
 
-            <Frame Padding="10" CornerRadius="8" BackgroundColor="#f0f0f0">
+            <Border Padding="10"   StrokeShape="RoundRectangle 8" BackgroundColor="#f0f0f0">
                 <VerticalStackLayout Spacing="8">
-                    <Label Text="Дни с болью:"/>
+                    <Label Text="{x:Static resources:AppResources.DaysWithPain}"/>
                     <Label Text="{Binding Summary.DaysWithPain}" FontAttributes="Bold"/>
 
-                    <Label Text="Эпизоды боли:"/>
+                    <Label Text="{x:Static resources:AppResources.PainEpisodes}"/>
                     <Label Text="{Binding Summary.PainEpisodes}" FontAttributes="Bold"/>
 
-                    <Label Text="Средняя интенсивность:"/>
+                    <Label Text="{x:Static resources:AppResources.AverageIntensity}"/>
                     <Label Text="{Binding Summary.AverageIntensity}" FontAttributes="Bold"/>
 
-                    <Label Text="Дни без боли:"/>
+                    <Label Text="{x:Static resources:AppResources.PainFreeDays}"/>
                     <Label Text="{Binding Summary.PainFreeDays}" FontAttributes="Bold"/>
 
-                    <Label Text="Самый длинный период без боли:"/>
+                    <Label Text="{x:Static resources:AppResources.LongestPainFreeStreak}"/>
                     <Label Text="{Binding Summary.LongestPainFreeStreak}" FontAttributes="Bold"/>
 
-                    <Label Text="Дни с приёмом медикаментов:"/>
+                    <Label Text="{x:Static resources:AppResources.DaysWithMedication}"/>
                     <Label Text="{Binding Summary.DaysWithMedication}" FontAttributes="Bold"/>
                 </VerticalStackLayout>
-            </Frame>
+            </Border>
 
         </VerticalStackLayout>
     </ScrollView>

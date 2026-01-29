@@ -79,11 +79,38 @@ namespace HeadacheTracker.Maui.Resources.Strings {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Average Intensity: ähnelt.
+        /// </summary>
+        public static string AverageIntensity {
+            get {
+                return ResourceManager.GetString("AverageIntensity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Cancel ähnelt.
         /// </summary>
         public static string CancelButton {
             get {
                 return ResourceManager.GetString("CancelButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Days With Medication: ähnelt.
+        /// </summary>
+        public static string DaysWithMedication {
+            get {
+                return ResourceManager.GetString("DaysWithMedication", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Days With Pain:  ähnelt.
+        /// </summary>
+        public static string DaysWithPain {
+            get {
+                return ResourceManager.GetString("DaysWithPain", resourceCulture);
             }
         }
         
@@ -133,6 +160,15 @@ namespace HeadacheTracker.Maui.Resources.Strings {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Longest Pain-Free Streak: ähnelt.
+        /// </summary>
+        public static string LongestPainFreeStreak {
+            get {
+                return ResourceManager.GetString("LongestPainFreeStreak", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Medications: ähnelt.
         /// </summary>
         public static string Medications {
@@ -147,6 +183,42 @@ namespace HeadacheTracker.Maui.Resources.Strings {
         public static string MondayShort {
             get {
                 return ResourceManager.GetString("MondayShort", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Month ähnelt.
+        /// </summary>
+        public static string Month {
+            get {
+                return ResourceManager.GetString("Month", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Pain Episodes:  ähnelt.
+        /// </summary>
+        public static string PainEpisodes {
+            get {
+                return ResourceManager.GetString("PainEpisodes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Pain-Free Days  ähnelt.
+        /// </summary>
+        public static string PainFreeDays {
+            get {
+                return ResourceManager.GetString("PainFreeDays", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Refresh ähnelt.
+        /// </summary>
+        public static string Refresh {
+            get {
+                return ResourceManager.GetString("Refresh", resourceCulture);
             }
         }
         
@@ -219,6 +291,15 @@ namespace HeadacheTracker.Maui.Resources.Strings {
         public static string WednesdayShort {
             get {
                 return ResourceManager.GetString("WednesdayShort", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Year ähnelt.
+        /// </summary>
+        public static string Year {
+            get {
+                return ResourceManager.GetString("Year", resourceCulture);
             }
         }
     }

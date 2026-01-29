@@ -1,76 +1,98 @@
 ﻿using HeadacheTracker.Domain.Entities;
 using HeadacheTracker.Maui.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using HeadacheTracker.Maui.ViewModels;
+using System.Diagnostics;
 
 namespace HeadacheTracker.Maui.Services
 {   
         public class StatisticsService
         {
-            public StatisticsSummary CalculateSummary(
-                IEnumerable<HeadacheEntry> headaches)
+        //Взять уже загруженные эпизоды боли и посчитать пользовательскую статистику
+        //за ЧЁТКО ЗАДАННЫЙ период времени.
+        public void CalculateSummary(
+      StatisticsSummary summary,
+      IEnumerable<HeadacheEntry> headaches, IEnumerable<MedicationEntry> medications,
+      DateTime periodStart,
+      DateTime periodEnd)
+        {
+            try
             {
-                var summary = new StatisticsSummary();
+                Debug.WriteLine("=== CalculateSummary CALLED ===");
 
-                // Список уникальных дней с болью
-                var daysWithPain = headaches
+                var filtered = headaches
+                    .Where(h => h.Date.Date >= periodStart.Date &&
+                                h.Date.Date <= periodEnd.Date)
+                    .ToList();
+
+                Debug.WriteLine($"Filtered headaches count: {filtered.Count}");
+
+                var daysWithPain = filtered
                     .Select(h => h.Date.Date)
                     .Distinct()
-                    .ToList();
+                    .ToHashSet();
+
+                Debug.WriteLine($"DaysWithPain calculated: {daysWithPain.Count}");
+
                 summary.DaysWithPain = daysWithPain.Count;
-
-                // Общее количество эпизодов боли
-                summary.PainEpisodes = headaches.Count();
-
-                // Средняя интенсивность
-                summary.AverageIntensity = headaches.Any()
-                    ? headaches.Average(h => h.Intensity)
+                summary.PainEpisodes = filtered.Count;
+                summary.AverageIntensity = filtered.Any()
+                    ? filtered.Average(h => h.Intensity)
                     : 0;
 
-                // Определяем весь период по данным
-                List<DateTime> allDays;
-                if (headaches.Any())
-                {
-                    var start = headaches.Min(h => h.Date.Date);
-                    var end = headaches.Max(h => h.Date.Date);
-                    allDays = new List<DateTime>();
-                    for (var day = start; day <= end; day = day.AddDays(1))
-                    {
-                        allDays.Add(day);
-                    }
-                }
-                else
-                {
-                    allDays = new List<DateTime>();
-                }
+                Debug.WriteLine("Basic fields set");
 
-                // Количество дней без боли
+                var allDays = new List<DateTime>();
+                for (var day = periodStart.Date; day <= periodEnd.Date; day = day.AddDays(1))
+                    allDays.Add(day);
+
+                Debug.WriteLine($"AllDays count: {allDays.Count}");
+
                 summary.PainFreeDays = allDays.Count(d => !daysWithPain.Contains(d));
+                summary.LongestPainFreeStreak =
+                    CalculateLongestStreak(allDays, daysWithPain);
 
-                // Самый длинный период без боли
-                summary.LongestPainFreeStreak = CalculateLongestStreak(allDays, daysWithPain);
-
-                // Дни с приёмом медикаментов
-                summary.DaysWithMedication = headaches
-                    .Where(h => h.Medications != null && h.Medications.Any())
+                summary.DaysWithMedication = filtered
+                    .Where(h => h.Medications?.Any() == true)
                     .Select(h => h.Date.Date)
                     .Distinct()
                     .Count();
 
-                // Средняя доза пока оставляем null
-                summary.AverageDose = null;
+                // id болей за период
+                var headacheIdsInPeriod = filtered
+                    .Select(h => h.Id)
+                    .ToHashSet();
 
-                return summary;
+                // дни, когда при боли принимались медикаменты
+                var daysWithMedication = medications
+    .Where(m => headacheIdsInPeriod.Contains(m.HeadacheEntryId))
+    .Select(m =>
+        headaches
+            .First(h => h.Id == m.HeadacheEntryId)
+            .Date.Date)
+    .Distinct()
+    .Count();
+                summary.DaysWithMedication = daysWithMedication;
+
+
+                Debug.WriteLine("=== CalculateSummary FINISHED ===");
             }
-
-            private int CalculateLongestStreak(List<DateTime> allDays, List<DateTime> daysWithPain)
+            catch (Exception ex)
             {
-                int longest = 0;
+                Debug.WriteLine("!!! EXCEPTION IN CalculateSummary !!!");
+                Debug.WriteLine(ex.ToString());
+                throw;
+            }
+        }
+
+
+        private int CalculateLongestStreak(
+IEnumerable<DateTime> allDays,
+HashSet<DateTime> daysWithPain)
+
+        {
+            int longest = 0;
                 int current = 0;
 
-                foreach (var day in allDays.OrderBy(d => d))
+                foreach (var day in allDays)
                 {
                     if (!daysWithPain.Contains(day))
                     {

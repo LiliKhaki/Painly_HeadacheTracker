@@ -1,13 +1,14 @@
-﻿namespace HeadacheTracker.Maui.Models;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 
-public class StatisticsSummary
+namespace HeadacheTracker.Maui.Models;
+
+public partial class StatisticsSummary : ObservableObject
 {
-    public int DaysWithPain { get; set; }
-    public int PainEpisodes { get; set; }
-    public double AverageIntensity { get; set; }
-    public int PainFreeDays { get; set; }
-    public double? AverageDose { get; set; }
-
-    public int LongestPainFreeStreak { get; set; }
-    public int DaysWithMedication { get; set; }
+    [ObservableProperty] private int daysWithPain;
+    [ObservableProperty] private int painEpisodes;
+    [ObservableProperty] private double averageIntensity;
+    [ObservableProperty] private int painFreeDays;
+    [ObservableProperty] private int longestPainFreeStreak;
+    [ObservableProperty] private int daysWithMedication;
+    [ObservableProperty] private double? averageDose;
 }

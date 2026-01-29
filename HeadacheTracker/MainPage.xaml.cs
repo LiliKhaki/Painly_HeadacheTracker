@@ -17,12 +17,12 @@ namespace HeadacheTracker.Maui
 
 
         }
-        protected override async void OnAppearing()
+        protected override void OnAppearing()
         {
             base.OnAppearing();
 
             if (BindingContext is CalendarViewModel vm)
-                await vm.LoadMonthAsync();
+                _ = vm.LoadMonthAsync(); // 🔑 БЕЗ await
         }
 
 

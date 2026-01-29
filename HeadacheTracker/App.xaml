@@ -1,5 +1,37 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<Application xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+﻿<Application xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:Microsoft.Maui.Controls;assembly=Microsoft.Maui.Controls"
              x:Class="HeadacheTracker.Maui.App">
+
+    <Application.Resources>
+        <ResourceDictionary>
+
+            <!-- Light colors -->
+            <Color x:Key="LightPrimaryColor">#70C28F</Color>
+            <Color x:Key="LightSecondaryColor">#A7D9B2</Color>
+
+            <!-- Dark colors -->
+            <Color x:Key="DarkPrimaryColor">#4B8A5F</Color>
+            <Color x:Key="DarkSecondaryColor">#6FA785</Color>
+
+            <Color x:Key="LightBackgroundColor">#E6F2EB</Color>
+            <Color x:Key="DarkBackgroundColor">#1E2A24</Color>
+
+
+            <Style x:Key="ButtonStyle"
+               TargetType="Button">
+                <Setter Property="BackgroundColor"
+                    Value="{AppThemeBinding Light={StaticResource LightPrimaryColor}, Dark={StaticResource DarkPrimaryColor}}" />
+                <Setter Property="TextColor"
+                    Value="{AppThemeBinding Light={StaticResource LightSecondaryColor}, Dark={StaticResource DarkSecondaryColor}}" />
+            </Style>
+            
+            <Style TargetType="ContentPage">
+                <Setter Property="BackgroundColor"
+        Value="{AppThemeBinding 
+            Light={StaticResource LightBackgroundColor},
+            Dark={StaticResource DarkBackgroundColor}}" />
+            </Style>
+        </ResourceDictionary>
+    </Application.Resources>
 </Application>

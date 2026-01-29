@@ -31,9 +31,15 @@ namespace HeadacheTracker.Infrastructure.Repositories
                                   .ToListAsync();
         }
 
-       
 
-       
+        public async Task<List<MedicationEntry>> GetAllAsync()
+        {
+            return await _database
+                .Table<MedicationEntry>()
+                .ToListAsync();
+        }
+
+
 
         public async Task UpdateAsync(MedicationEntry entry)
         {

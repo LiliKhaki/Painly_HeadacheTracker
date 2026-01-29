@@ -4,6 +4,7 @@ namespace HeadacheTracker.Domain.Abstractions
 {
     public interface IMedicationRepository
     {
+        Task<List<MedicationEntry>> GetAllAsync();
         Task AddAsync(MedicationEntry entry);
         Task<IEnumerable<MedicationEntry>> GetByHeadacheIdAsync(int headacheId);
         

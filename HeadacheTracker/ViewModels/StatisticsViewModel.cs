@@ -1,9 +1,13 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using HeadacheTracker.Domain.Abstractions;
 using HeadacheTracker.Domain.Entities;
+using HeadacheTracker.Infrastructure.Repositories;
 using HeadacheTracker.Maui.Models;
 using HeadacheTracker.Maui.Services;
-using System;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 
 
@@ -12,50 +16,106 @@ namespace HeadacheTracker.Maui.ViewModels
     public partial class StatisticsViewModel : ObservableObject
     {
         private readonly StatisticsService _statisticsService;
+        private readonly IHeadacheRepository _headacheRepository;
+        private readonly IMedicationRepository _medicationRepository;
 
-        public StatisticsViewModel(StatisticsService service)
-        {
-            _statisticsService = service;
-        }
+        [ObservableProperty]
+        private ObservableCollection<int> years;
 
-        // Период для статистики
+        [ObservableProperty]
+        private ObservableCollection<string> months;
+
+        [ObservableProperty]
+        private string periodLabel;
+
         [ObservableProperty]
         private int selectedYear;
 
-        [ObservableProperty]
-        private int selectedMonth; // 1..12, 0 значит "весь год"
+        
 
-        // Результат статистики
         [ObservableProperty]
         private StatisticsSummary summary;
 
-        /// <summary>
-        /// Вычислить статистику за выбранный период
-        /// </summary>
-        public void LoadStatistics(ObservableCollection<HeadacheEntry> allHeadaches)
+        [ObservableProperty]
+        private int selectedMonthIndex; // 0..11
+
+     
+
+
+        public StatisticsViewModel(IHeadacheRepository repository, IMedicationRepository medicationRepository, StatisticsService service)
         {
-            if (allHeadaches == null || !allHeadaches.Any())
-            {
-                Summary = new StatisticsSummary();
-                return;
-            }
+            _headacheRepository = repository;
+            _medicationRepository = medicationRepository;
+            _statisticsService = service;
+            Summary = new StatisticsSummary();
 
-            // Фильтруем по выбранному периоду
-            var filteredHeadaches = allHeadaches.AsEnumerable();
+            var now = DateTime.Now;
 
-            if (SelectedMonth >= 1 && SelectedMonth <= 12)
-            {
-                filteredHeadaches = filteredHeadaches
-                    .Where(h => h.Date.Year == SelectedYear && h.Date.Month == SelectedMonth);
-            }
-            else
-            {
-                filteredHeadaches = filteredHeadaches
-                    .Where(h => h.Date.Year == SelectedYear);
-            }
+            Years = new ObservableCollection<int>(
+                Enumerable.Range(now.Year - 5, 6)
+            );
 
-            // Вычисляем статистику через сервис
-            Summary = _statisticsService.CalculateSummary(filteredHeadaches);
+            Months = new ObservableCollection<string>(
+                CultureInfo.CurrentCulture.DateTimeFormat.MonthNames
+                    .Where(m => !string.IsNullOrWhiteSpace(m))
+                    .ToList()
+            );
+
+            SelectedYear = now.Year;
+            selectedMonthIndex = now.Month - 1; // 🔴 ВАЖНО: после Months
+
+            Debug.WriteLine($"Months count: {Months.Count}");
+            Debug.WriteLine($"SelectedMonthIndex: {SelectedMonthIndex}");
+
         }
+
+        public async Task LoadStatisticsAsync()
+        {
+            var monthNumber = selectedMonthIndex + 1;
+
+            var periodStart = new DateTime(SelectedYear, monthNumber, 1);
+            var periodEnd = periodStart.AddMonths(1).AddDays(-1);
+
+            Debug.WriteLine($"Year={SelectedYear}, Month={monthNumber}");
+
+
+            var allHeadaches = await _headacheRepository.GetAllAsync() ?? new List<HeadacheEntry>();
+            Debug.WriteLine($"All headaches: {allHeadaches.Count}");
+            var medications = await _medicationRepository.GetAllAsync();
+            Debug.WriteLine($"All medications: {medications.Count}");
+
+            _statisticsService.CalculateSummary(
+     Summary,
+     allHeadaches, medications,
+     periodStart,
+     periodEnd);
+
+
+            // Aktualisieren der Periodenbeschriftung
+            periodLabel = $"{CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(SelectedMonthIndex)} {SelectedYear}";
+        }
+
+        [RelayCommand]
+        private async Task RefreshStatisticsAsync()
+        {
+
+            try
+            {
+                Debug.WriteLine("RefreshStatisticsAsync called");
+                await LoadStatisticsAsync();
+                Debug.WriteLine("=== RefreshStatisticsCommand EXECUTED ===");
+
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex + " из RefreshStatisticsAsync выброшен");
+
+                
+            }
+        }
+
+        
+
     }
+
 }

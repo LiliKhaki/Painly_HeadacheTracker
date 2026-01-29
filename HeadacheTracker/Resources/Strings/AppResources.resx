@@ -123,8 +123,17 @@
   <data name="AddRecord" xml:space="preserve">
     <value>Add Record</value>
   </data>
+  <data name="AverageIntensity" xml:space="preserve">
+    <value>Average Intensity:</value>
+  </data>
   <data name="CancelButton" xml:space="preserve">
     <value>Cancel</value>
+  </data>
+  <data name="DaysWithMedication" xml:space="preserve">
+    <value>Days With Medication:</value>
+  </data>
+  <data name="DaysWithPain" xml:space="preserve">
+    <value>Days With Pain: </value>
   </data>
   <data name="DeleteRecord" xml:space="preserve">
     <value>Delete Record</value>
@@ -143,11 +152,26 @@
     <value>Headache Record</value>
     <comment>no place</comment>
   </data>
+  <data name="LongestPainFreeStreak" xml:space="preserve">
+    <value>Longest Pain-Free Streak:</value>
+  </data>
   <data name="Medications" xml:space="preserve">
     <value>Medications:</value>
   </data>
   <data name="MondayShort" xml:space="preserve">
     <value>Mo</value>
+  </data>
+  <data name="Month" xml:space="preserve">
+    <value>Month</value>
+  </data>
+  <data name="PainEpisodes" xml:space="preserve">
+    <value>Pain Episodes: </value>
+  </data>
+  <data name="PainFreeDays" xml:space="preserve">
+    <value>Pain-Free Days </value>
+  </data>
+  <data name="Refresh" xml:space="preserve">
+    <value>Refresh</value>
   </data>
   <data name="SaturdayShort" xml:space="preserve">
     <value>Sa</value>
@@ -172,5 +196,8 @@
   </data>
   <data name="WednesdayShort" xml:space="preserve">
     <value>We</value>
+  </data>
+  <data name="Year" xml:space="preserve">
+    <value>Year</value>
   </data>
 </root>
