@@ -1,4 +1,4 @@
-![Banner](Screenshots/banner.png)
+![Banner](HeadacheTracker/Screenshots/banner.png)
 
 # HeadacheTracker
 
