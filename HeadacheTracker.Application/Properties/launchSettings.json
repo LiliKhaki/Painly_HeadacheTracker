@@ -1,0 +1,11 @@
+{
+  "profiles": {
+    "HeadacheTracker.Application": {
+      "commandName": "Project"
+    },
+    "Profile 1": {
+      "commandName": "Executable",
+      "executablePath": "C:\\dev\\HeadacheTracker\\HeadacheTracker\\App.xaml.cs"
+    }
+  }
+}

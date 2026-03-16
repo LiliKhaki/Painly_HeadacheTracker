@@ -55,12 +55,14 @@ namespace HeadacheTracker.Maui.ViewModels
                     foreach (var day in Days)
                         day.IsSelected = day.Date.Date == value?.Date.Date;
 
-
+                    OnPropertyChanged(nameof(ShowFutureDateHint));
+                    OnPropertyChanged(nameof(CanAddRecord));
                     _ = LoadEntriesForSelectedDayAsync();
                    
 
                 }
             }
+    
         }
         #endregion
 
@@ -140,7 +142,8 @@ namespace HeadacheTracker.Maui.ViewModels
         //void OnPropertyChanged(string name) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
 
         #endregion
-
+        public bool CanAddRecord =>
+            SelectedDay != null && SelectedDay.Date.Date <= DateTime.Today;
         private bool CanDeleteRecord()
         {
             return SelectedHeadacheEntry != null;
@@ -150,7 +153,10 @@ namespace HeadacheTracker.Maui.ViewModels
         {
             return SelectedHeadacheEntry != null;
         }
+        public bool ShowFutureDateHint =>
+    SelectedDay?.Date.Date > DateTime.Today;
 
+    
 
         #endregion
 
@@ -565,9 +571,9 @@ namespace HeadacheTracker.Maui.ViewModels
                 if (page != null)
                 {
                     await page.DisplayAlert(
-                        "Error",
-                        $"Failed to delete the record: {ex.Message}",
-                        "OK"
+                        AppResources.Error,
+                        $"{AppResources.FailedToDeleteRecord}: {ex.Message}",
+                        AppResources.OkButton
                     );
                 }
                 else

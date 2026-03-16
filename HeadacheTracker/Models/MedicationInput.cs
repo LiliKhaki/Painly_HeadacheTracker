@@ -14,7 +14,13 @@ namespace HeadacheTracker.Maui.Models
         public string Name
         {
             get => _name;
-            set => SetProperty(ref _name, value);
+            set
+            {
+                if (SetProperty(ref _name, value))
+                {
+                    OnPropertyChanged(nameof(CanEnterDose));
+                }
+            }
         }
 
         private double _dose;
@@ -23,6 +29,8 @@ namespace HeadacheTracker.Maui.Models
             get => _dose;
             set => SetProperty(ref _dose, value);
         }
+        public bool CanEnterDose =>
+ !string.IsNullOrWhiteSpace(Name);
     }
 
 }

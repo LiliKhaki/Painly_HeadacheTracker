@@ -28,14 +28,28 @@ namespace HeadacheTracker.Maui.Views
 
             OpenSupportCommand = new Command(async () =>
             {
-                System.Diagnostics.Debug.WriteLine("Command fired!");
-                var url = "https://www.paypal.me/LiliyaKhaki"; 
-                if (await Launcher.CanOpenAsync(url))
-                    await Launcher.OpenAsync(url);
+                try
+                {
+                    var url = new Uri("https://www.paypal.com/donate/?hosted_button_id=8CTZ7EZ33V2X2\r\n");
+
+                    await Launcher.Default.OpenAsync(url);
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine($"[Support] {ex}");
+                    var page = Microsoft.Maui.Controls.Application.Current?.Windows.FirstOrDefault()?.Page;
+                    if (page == null)
+                    {
+                        System.Diagnostics.Debug.WriteLine("no active Page found.");
+                        return;
+                    }
+                    await page.DisplayAlert(
+                        AppResources.Error,
+                        AppResources.UnableToOpenDonationPage,
+                        AppResources.OkButton);
+                }
             });
 
-
-            
             OpenBugReportFormCommand = new Command(async () =>
             {
                 var url = "https://forms.gle/JnRgEQLEkzvy2mBU7";

@@ -18,7 +18,7 @@ namespace HeadacheTracker.Maui
             _initializer = initializer;
             _mainPage = mainPage;
 
-            UserAppTheme = AppTheme.Dark;
+           // UserAppTheme = AppTheme.Dark;
 
             Task.Run(async () => await _initializer.InitializeAsync());
         }

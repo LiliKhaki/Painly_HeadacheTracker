@@ -35,7 +35,7 @@ namespace HeadacheTracker.Maui.Services
                 summary.DaysWithPain = daysWithPain.Count;
                 summary.PainEpisodes = filtered.Count;
                 summary.AverageIntensity = filtered.Any()
-                    ? filtered.Average(h => h.Intensity)
+                    ? Math.Round(filtered.Average(h => h.Intensity), 2)
                     : 0;
 
                 Debug.WriteLine("Basic fields set");

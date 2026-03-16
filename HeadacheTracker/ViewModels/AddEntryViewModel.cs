@@ -16,7 +16,6 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 
 
-
 namespace HeadacheTracker.Maui.ViewModels
 {
     public partial class AddEntryViewModel : ObservableObject, INotifyPropertyChanged
@@ -62,6 +61,8 @@ namespace HeadacheTracker.Maui.ViewModels
         public ICommand FocusNextCommand { get; }
 
         public event Action? RequestClose;
+
+     
 
         public AddEntryViewModel(IHeadacheRepository headacheRepo, IMedicationRepository medicationRepo, DateTime selectedDate, bool isEditMode)
         {
@@ -116,6 +117,19 @@ namespace HeadacheTracker.Maui.ViewModels
 
         private async Task SaveAsync()
         {
+            if (EntryDate > DateTime.Today)
+            {
+                var page = Microsoft.Maui.Controls.Application.Current?.Windows.FirstOrDefault()?.Page;
+                if (page != null)
+                {
+                    await page.DisplayAlert(
+                        AppResources.Error,
+                        "Future date is not allowed.",
+                        AppResources.OkButton);
+                }
+                return;
+            }
+
             if (Intensity == null)
             {
                 var page = Microsoft.Maui.Controls.Application.Current?.Windows.FirstOrDefault()?.Page;
@@ -160,7 +174,7 @@ namespace HeadacheTracker.Maui.ViewModels
                 }
 
                 // Добавляем новые или обновляем существующие
-                foreach (var med in Medications)
+                foreach (var med in Medications.Where(m => !string.IsNullOrWhiteSpace(m.Name)))
                 {
                     var entry = new MedicationEntry
                     {

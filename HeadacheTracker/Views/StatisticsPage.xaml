@@ -14,11 +14,11 @@
                         Light={DynamicResource PanelLight}, 
                         Dark={DynamicResource PanelDark}}">
 
-            <!-- Заголовок периода -->
+            <!-- Заголовок периода 
             <Label
                 Text="{Binding PeriodLabel}"
                 Style="{DynamicResource TitleTextStyle}"
-                HorizontalOptions="Center" />
+                HorizontalOptions="Center" /> -->
 
             <!-- Год -->
             <HorizontalStackLayout Spacing="10">

@@ -1,12 +1,14 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using HeadacheTracker.Domain.Entities;
 using HeadacheTracker.Maui.Models;
+using HeadacheTracker.Maui.Resources.Strings;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
 
 namespace HeadacheTracker.Maui.ViewModels
 {
@@ -19,7 +21,11 @@ namespace HeadacheTracker.Maui.ViewModels
         public DateTime Date { get; set; }
         public int Intensity { get; set; }  
         public string? Notes { get; set; }
-        public string? MedicationName { get; set; }
+     
+        public string? MedicationName 
+        {
+            get; set;
+        }
         public double? Dose { get; set; }
 
         private bool _isSelected;
@@ -29,9 +35,13 @@ namespace HeadacheTracker.Maui.ViewModels
             set => SetProperty(ref _isSelected, value);
         }
 
+  
+
         public ObservableCollection<MedicationInput> Medications { get; set; }
     = new ObservableCollection<MedicationInput>();
 
+        public string IntensityText =>
+      $": {Intensity}";
 
         public HeadacheEntry ToHeadacheEntry()
         {

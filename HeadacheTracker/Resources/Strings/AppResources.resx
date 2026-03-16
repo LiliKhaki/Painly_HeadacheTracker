@@ -252,10 +252,10 @@
     <value>Support the Project</value>
   </data>
   <data name="Support_Text" xml:space="preserve">
-    <value>Painly is an independent project developed with care. If you find it helpful and would like to support further development, you can contribute via PayPal.</value>
+    <value>This app is developed by one person in their free time. If it helps you, consider supporting the project ❤️</value>
   </data>
   <data name="Support_Button" xml:space="preserve">
-    <value>Support Painly</value>
+    <value>Support Painly ❤️</value>
   </data>
   <data name="Version_Label" xml:space="preserve">
     <value>Version</value>
@@ -268,5 +268,23 @@
   </data>
   <data name="Feedback_Button" xml:space="preserve">
     <value>Report a bug</value>
+  </data>
+  <data name="Dose" xml:space="preserve">
+    <value>Dose</value>
+  </data>
+  <data name="Medication" xml:space="preserve">
+    <value>Medication name</value>
+  </data>
+  <data name="Intensity" xml:space="preserve">
+    <value>Intensity</value>
+  </data>
+  <data name="UnableToOpenDonationPage" xml:space="preserve">
+    <value>Unable to open donation page.</value>
+  </data>
+  <data name="FailedToDeleteRecord" xml:space="preserve">
+    <value>Failed to delete record:</value>
+  </data>
+  <data name="NoTravelInFuture" xml:space="preserve">
+    <value>Painly bans travel to the future</value>
   </data>
 </root>

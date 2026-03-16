@@ -10,9 +10,5 @@
     <Folder Include="Helpers\" />
   </ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="CommunityToolkit.Maui" Version="12.2.0" />
-    <PackageReference Include="Microsoft.Maui.Controls" Version="9.0.120" />
-  </ItemGroup>
 
 </Project>

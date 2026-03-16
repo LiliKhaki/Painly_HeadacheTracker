@@ -65,7 +65,9 @@
             </Grid>
 
             <!-- Календарь -->
-            <CollectionView ItemsSource="{Binding Days}" SelectionMode="None" SelectedItem="{Binding SelectedDay}">
+            <CollectionView ItemsSource="{Binding Days}" SelectionMode="None"  >
+                <!--  SelectedItem="{Binding SelectedDay}">   -->
+                           
 
                 <CollectionView.ItemsLayout>
                     <GridItemsLayout Orientation="Vertical" Span="7" />
@@ -107,13 +109,23 @@
                                            Opacity="{Binding IsFromCurrentMonth, Converter={StaticResource BoolToOpacityConverter}}"/>
                                     <BoxView HeightRequest="1" BackgroundColor="#D0D8D3"
                                              VerticalOptions="End" HorizontalOptions="Fill"/>
+                                    
                                 </Grid>
                             </Border>
                         </Grid>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
 
+                
             </CollectionView>
+
+            <Label
+Text="{x:Static local:AppResources.NoTravelInFuture}"
+FontSize="12"
+TextColor="Gray"
+HorizontalOptions="Center"
+Margin="0,0,0,10"
+IsVisible="{Binding ShowFutureDateHint}" />
 
             <!-- CollectionView для записей головной боли -->
             <Grid Style="{DynamicResource PanelStyle}" ColumnDefinitions="2*,*" RowDefinitions="Auto,Auto" ColumnSpacing="10">
@@ -157,8 +169,10 @@
                                 <VerticalStackLayout>
                                     <Label Text="{Binding Date, StringFormat='{0:dd.MM.yyyy}'}" FontAttributes="Bold"
                                            TextColor="{AppThemeBinding Light={DynamicResource LightTextPrimaryColor }, Dark={DynamicResource DarkTextPrimaryColor}}"/>
-                                    <Label Text="{Binding Intensity, StringFormat='Intensity: {0}'}"
-                                           TextColor="{AppThemeBinding Light={DynamicResource LightTextPrimaryColor }, Dark={DynamicResource DarkTextPrimaryColor}}"/>
+                                    <HorizontalStackLayout>
+                                        <Label Text="{x:Static local:AppResources.Intensity}" />
+                                        <Label Text="{Binding IntensityText}" />
+                                    </HorizontalStackLayout>
                                     <Label Text="{Binding Notes}" 
                                            IsVisible="{Binding Notes, Converter={StaticResource StringToBoolConverter}}"
                                            TextColor="{AppThemeBinding Light={DynamicResource LightTextPrimaryColor }, Dark={DynamicResource DarkTextPrimaryColor}}"/>
@@ -185,7 +199,7 @@
 
                 <!-- Кнопки справа -->
                 <VerticalStackLayout Grid.Row="1" Grid.Column="1" Spacing="10" Margin="0,2,2,2" HorizontalOptions="Center" VerticalOptions="Start">
-                    <Button Text="{x:Static local:AppResources.AddRecord}" Command="{Binding AddRecordCommand}" WidthRequest="120"
+                    <Button Text="{x:Static local:AppResources.AddRecord}" Command="{Binding AddRecordCommand}"  IsEnabled="{Binding CanAddRecord}" WidthRequest="120"
                             Style="{DynamicResource PrimaryButtonStyle}" />
                     <Button Text="{x:Static local:AppResources.EditRecord}" Command="{Binding EditRecordCommand}" WidthRequest="120"
                             Style="{DynamicResource SecondaryButtonStyle}" />

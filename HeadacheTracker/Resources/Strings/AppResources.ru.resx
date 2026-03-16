@@ -142,7 +142,7 @@
     <value>Редактировать запись о головной боли</value>
   </data>
   <data name="EditRecord" xml:space="preserve">
-    <value>Редактировать</value>
+    <value>Править</value>
   </data>
   <data name="FridayShort" xml:space="preserve">
     <value>Пт</value>
@@ -205,7 +205,7 @@
     <value>Пожалуйста, введите значение от 1 до 10...</value>
   </data>
   <data name="Notes" xml:space="preserve">
-    <value>Комментарий</value>
+    <value>Комментарии</value>
   </data>
   <data name="DeleteEntryMessage" xml:space="preserve">
     <value>Вы действительно хотите удалить эту запись?</value>
@@ -250,10 +250,11 @@
     <value>Поддержать проект</value>
   </data>
   <data name="Support_Text" xml:space="preserve">
-    <value>Painly — независимый проект, созданный с заботой. Если приложение оказалось полезным и вы хотите поддержать дальнейшее развитие, вы можете сделать вклад через PayPal.</value>
+    <value>Это приложение разрабатывается одним человеком в свободное время.
+Если оно тебе помогает, подумай о поддержке проекта ❤️</value>
   </data>
   <data name="Support_Button" xml:space="preserve">
-    <value>Поддержать Painly</value>
+    <value>Поддержать Painly ❤️</value>
   </data>
   <data name="Version_Label" xml:space="preserve">
     <value>Версия</value>
@@ -266,5 +267,23 @@
   </data>
   <data name="Feedback_Button" xml:space="preserve">
     <value>Сообщить об ошибке</value>
+  </data>
+  <data name="Dose" xml:space="preserve">
+    <value>Доза</value>
+  </data>
+  <data name="Medication" xml:space="preserve">
+    <value>Название медикамента</value>
+  </data>
+  <data name="Intensity" xml:space="preserve">
+    <value>Интенсивность</value>
+  </data>
+  <data name="UnableToOpenDonationPage" xml:space="preserve">
+    <value>Не удаётся открыть страницу для пожертвований.</value>
+  </data>
+  <data name="FailedToDeleteRecord" xml:space="preserve">
+    <value>Не удалось удалить запись:</value>
+  </data>
+  <data name="NoTravelInFuture" xml:space="preserve">
+    <value>В Painly запрещены путешествия в будущее</value>
   </data>
 </root>

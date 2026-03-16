@@ -250,10 +250,11 @@
     <value>Projekt unterstützen</value>
   </data>
   <data name="Support_Text" xml:space="preserve">
-    <value>Painly ist ein unabhängiges Projekt, das mit Sorgfalt entwickelt wurde. Wenn es dir hilft und du die Weiterentwicklung unterstützen möchtest, kannst du über PayPal beitragen.</value>
+    <value>Diese App wird von einer einzelnen Person in der Freizeit entwickelt.
+Wenn sie dir hilft, erwäge bitte, das Projekt zu unterstützen ❤️</value>
   </data>
   <data name="Support_Button" xml:space="preserve">
-    <value>Painly unterstützen</value>
+    <value>Painly unterstützen ❤️</value>
   </data>
   <data name="Version_Label" xml:space="preserve">
     <value>Version</value>
@@ -266,5 +267,23 @@
   </data>
   <data name="Feedback_Button" xml:space="preserve">
     <value>Fehler melden</value>
+  </data>
+  <data name="Dose" xml:space="preserve">
+    <value>Dosierung</value>
+  </data>
+  <data name="Medication" xml:space="preserve">
+    <value>Name des Medikaments</value>
+  </data>
+  <data name="Intensity" xml:space="preserve">
+    <value>Intensität</value>
+  </data>
+  <data name="UnableToOpenDonationPage" xml:space="preserve">
+    <value>Die Spendenseite konnte nicht geöffnet werden.</value>
+  </data>
+  <data name="FailedToDeleteRecord" xml:space="preserve">
+    <value>Eintrag konnte nicht gelöscht werden:</value>
+  </data>
+  <data name="NoTravelInFuture" xml:space="preserve">
+    <value>Painly verbietet Reisen in die Zukunft</value>
   </data>
 </root>

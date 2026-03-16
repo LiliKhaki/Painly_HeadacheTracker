@@ -8,6 +8,7 @@
     xmlns:models="clr-namespace:HeadacheTracker.Maui.Models"
     x:Class="HeadacheTracker.Maui.Views.AddEntryPopup"
     x:DataType="vm:AddEntryViewModel"
+    
     x:Name="ThisPopup">
     <Grid  >
 
@@ -47,7 +48,7 @@
         <Border Style="{DynamicResource SurfaceStyle}" Padding="6">
             <Entry
                 x:Name="NotesEditor"
-                Placeholder="Notes"
+                Placeholder="{x:Static local:AppResources.Notes}"
                 HeightRequest="100"
                 Text="{Binding Notes}"
                 FontSize="13"
@@ -74,7 +75,7 @@
                             <!-- Название медикамента -->
                             <Border Grid.Column="0" Style="{DynamicResource SurfaceStyle}" Padding="2">
                                 <Entry
-                        Placeholder="Medication"
+                        Placeholder="{x:Static local:AppResources.Medication}"
                         Text="{Binding Name}"
                         ReturnType="Done"
                         Completed="OnEntryCompleted"/>
@@ -83,10 +84,11 @@
                             <!-- Доза -->
                             <Border Grid.Column="1" Style="{DynamicResource SurfaceStyle}" Padding="2">
                                 <Entry
-                        Placeholder="Dose"
+                        Placeholder="{x:Static local:AppResources.Dose}"
                         Keyboard="Numeric"
                         Text="{Binding Dose}"
                         ReturnType="Done"
+                        IsEnabled="{Binding CanEnterDose}" 
                         Completed="OnEntryCompleted"/>
                             </Border>
 
