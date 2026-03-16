@@ -13,6 +13,9 @@ public interface IHeadacheRepository
     Task<IEnumerable<HeadacheEntry>> GetByDateAsync(DateTime date);
     Task<List<HeadacheEntry>> GetByMonthAsync(int year, int month);
 
+    Task<List<(HeadacheEntry Headache, MedicationEntry? Medication)>>
+    GetByDateWithMedicationsAsync(DateTime date);
+
     Task AddAsync(HeadacheEntry entry);
     Task DeleteAsync(HeadacheEntry entry);
     Task UpdateAsync(HeadacheEntry entry);

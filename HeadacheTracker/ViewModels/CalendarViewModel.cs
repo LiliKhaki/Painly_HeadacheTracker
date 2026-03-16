@@ -7,6 +7,8 @@ using HeadacheTracker.Domain.Abstractions;
 using HeadacheTracker.Domain.Entities;
 using HeadacheTracker.Infrastructure.Repositories;
 using HeadacheTracker.Maui.Messages;
+using HeadacheTracker.Maui.Models;
+using HeadacheTracker.Maui.Resources.Strings;
 using HeadacheTracker.Maui.Views;
 using System;
 using System.Collections.ObjectModel;
@@ -37,6 +39,8 @@ namespace HeadacheTracker.Maui.ViewModels
         public string CurrentMonthName => new DateTime(Year, Month, 1).ToString("MMMM yyyy");
 
         public ObservableCollection<CalendarDay> Days { get; } = new();
+        
+
         #endregion
 
         #region Selected Day
@@ -51,7 +55,10 @@ namespace HeadacheTracker.Maui.ViewModels
                     foreach (var day in Days)
                         day.IsSelected = day.Date.Date == value?.Date.Date;
 
+
                     _ = LoadEntriesForSelectedDayAsync();
+                   
+
                 }
             }
         }
@@ -72,7 +79,7 @@ namespace HeadacheTracker.Maui.ViewModels
         {
             get => _selectedHeadacheEntry;
             set
-            {
+            { 
                 if (SetProperty(ref _selectedHeadacheEntry, value))
                 {
                     foreach (var it in HeadacheEntriesForSelectedDay)
@@ -89,6 +96,8 @@ namespace HeadacheTracker.Maui.ViewModels
         #endregion
 
         #region Commands
+
+        public ICommand SetSelectedDayCommand { get; }
         public IRelayCommand AddRecordCommand { get; }
         public IRelayCommand EditRecordCommand { get; }
         public IRelayCommand DeleteRecordCommand { get; }
@@ -96,13 +105,39 @@ namespace HeadacheTracker.Maui.ViewModels
         public ICommand NextMonthCommand { get; }
         public ICommand PreviousMonthCommand { get; }
         public ICommand OpenStatisticsCommand { get; }
+        public ICommand OpenAboutCommand { get; }
         public ICommand OpenAddEntryCommand { get; }
+       
+        public ICommand SelectHeadacheEntryCommand =>
+    new Command<HeadacheEntryViewModel>(entry =>
+    {
+        if (entry == null)
+            return;
+
+        // если нажали на уже выбранный элемент — снять выделение
+        if (SelectedHeadacheEntry == entry)
+        {
+            entry.IsSelected = false;
+            SelectedHeadacheEntry = null;
+            return;
+        }
+
+        // снять выделение с предыдущего
+        if (SelectedHeadacheEntry != null)
+            SelectedHeadacheEntry.IsSelected = false;
+
+        // выбрать новый
+        SelectedHeadacheEntry = entry;
+        entry.IsSelected = true;
+    });
+
 
         #endregion
 
         #region INotifyPropertyChanged
 
-        public event PropertyChangedEventHandler? PropertyChanged;
+        //public event PropertyChangedEventHandler? PropertyChanged;
+        //void OnPropertyChanged(string name) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
 
         #endregion
 
@@ -135,6 +170,7 @@ namespace HeadacheTracker.Maui.ViewModels
             Days = new ObservableCollection<CalendarDay>();
 
             OpenStatisticsCommand = new Command(async () => await OnOpenStatistics());
+            OpenAboutCommand = new RelayCommand (async () => await OpenAboutPage());
             AddRecordCommand = new RelayCommand(async () => await AddRecordAsync());
             OpenAddEntryCommand = new RelayCommand(async () => await OpenAddEntryPageAsync());
             EditRecordCommand = new RelayCommand(OnEditRecord, CanEdit);
@@ -142,6 +178,10 @@ namespace HeadacheTracker.Maui.ViewModels
 
             NextMonthCommand = new RelayCommand(async () => await ChangeMonthAsync(1));
             PreviousMonthCommand = new RelayCommand(async () => await ChangeMonthAsync(-1));
+            SetSelectedDayCommand = new Command<CalendarDay>(day =>
+            {
+                SelectedDay = day;
+            });
 
             var today = DateTime.Today;
             Year = today.Year;
@@ -177,19 +217,22 @@ namespace HeadacheTracker.Maui.ViewModels
         {
             try
             {
+                SelectedHeadacheEntry = null;
+                HeadacheEntriesForSelectedDay.Clear();
+
                 var date = (SelectedDay?.Date ?? DateTime.Today).Date;
 
-                // 1. Получаем записи за этот день
-                var headacheEntries = await _repository.GetByDateAsync(date);
+                var data = await _repository.GetByDateWithMedicationsAsync(date);
 
-                var combinedList = new List<HeadacheEntryViewModel>();
+                var grouped = data
+                    .GroupBy(x => x.Headache.Id);
 
-                foreach (var headache in headacheEntries)
+                var result = new List<HeadacheEntryViewModel>();
+
+                foreach (var group in grouped)
                 {
-                    // 2. Получаем связанные лекарства
-                    var meds = await _medicationRepository.GetByHeadacheIdAsync(headache.Id);
+                    var headache = group.First().Headache;
 
-                    // 3. Создаем VM
                     var vm = new HeadacheEntryViewModel
                     {
                         Id = headache.Id,
@@ -198,24 +241,23 @@ namespace HeadacheTracker.Maui.ViewModels
                         Notes = headache.Notes
                     };
 
-                    // 4. Добавляем лекарства
-                    foreach (var m in meds)
+                    foreach (var item in group)
                     {
-                        vm.Medications.Add(new MedicationEntry
+                        if (item.Medication != null)
                         {
-                            Id = m.Id,
-                            HeadacheEntryId = m.HeadacheEntryId,
-                            Medication = m.Medication,
-                            Dose = m.Dose
-                        });
+                            vm.Medications.Add(new MedicationInput
+                            {
+                                Name = item.Medication.Medication ?? string.Empty,   
+                                Dose = (double)(item.Medication.Dose ?? 0)
+                            });
+                        }
                     }
 
-                    combinedList.Add(vm);
+                    result.Add(vm);
                 }
 
-                // 5. Обновляем 
                 HeadacheEntriesForSelectedDay =
-                    new ObservableCollection<HeadacheEntryViewModel>(combinedList);
+                    new ObservableCollection<HeadacheEntryViewModel>(result);
 
                 OnPropertyChanged(nameof(HeadacheEntriesForSelectedDay));
             }
@@ -227,6 +269,9 @@ namespace HeadacheTracker.Maui.ViewModels
 
         private async Task ChangeMonthAsync(int delta)
         {
+            SelectedHeadacheEntry = null; // сброс выделения
+            HeadacheEntriesForSelectedDay.Clear();
+
             Month += delta;
             if (Month > 12)
             {
@@ -246,6 +291,11 @@ namespace HeadacheTracker.Maui.ViewModels
         public async Task LoadMonthAsync()
         {
             Debug.WriteLine("LoadMonthAsync START");
+
+            SelectedHeadacheEntry = null; // сброс выделения
+            HeadacheEntriesForSelectedDay.Clear();
+
+
 
             // 1️⃣ СНАЧАЛА — пустой календарь
             var days = GenerateDays(Year, Month, Enumerable.Empty<DateTime>());
@@ -280,7 +330,7 @@ namespace HeadacheTracker.Maui.ViewModels
         }
 
 
-        void OnPropertyChanged(string name) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+        
 
         // GenerateDays / LoadMonthAsync в ViewModel
         private List<CalendarDay> GenerateDays(
@@ -344,20 +394,50 @@ namespace HeadacheTracker.Maui.ViewModels
             if (today != null)
                 today.IsToday = true;
 
+            // ✅ Добавляем индекс каждому дню
+            for (int i = 0; i < result.Count; i++)
+            {
+                result[i].Index = i;
+            }
+
+
             return result;
         }
+       
+
         private async Task AddRecordAsync()
         {
             var entryDate = SelectedDay?.Date ?? DateTime.Today;
 
-            var viewModel = new AddEntryViewModel(_repository, _medicationRepository, entryDate);
+            var viewModel = new AddEntryViewModel(_repository, _medicationRepository, entryDate, isEditMode: false);
 
             var popup = new AddEntryPopup(viewModel)
             {
                 BindingContext = viewModel
             };
 
-            await Microsoft.Maui.Controls.Application.Current.MainPage.ShowPopupAsync(popup);
+            var page = Microsoft.Maui.Controls.Application.Current?.Windows?.FirstOrDefault()?.Page;
+            if (page == null)
+            {
+                Debug.WriteLine("[AddRecordAsync] No current Page to show popup");
+                return;
+            }
+
+            await page.ShowPopupAsync(popup);
+        }
+
+        private async Task OpenAboutPage()
+        {
+            var page = new AboutPage();
+            var nav = Microsoft.Maui.Controls.Application.Current?.Windows.FirstOrDefault()?.Page?.Navigation;
+            if (nav != null)
+            {
+                await nav.PushAsync(page);
+            }
+            else
+            {
+                Debug.WriteLine("[CalendarViewModel] Navigation not available.");
+            }
         }
 
         private async Task OpenAddEntryPageAsync()
@@ -369,14 +449,22 @@ namespace HeadacheTracker.Maui.ViewModels
             var viewModel = new AddEntryViewModel(
                 _repository,
                 _medicationRepository,
-                SelectedDay.Date
+                SelectedDay.Date,
+                false
             );
 
             // создаём popup и передаём ViewModel в конструктор
             var popup = new AddEntryPopup(viewModel);
 
-            // показываем popup поверх текущей страницы
-            await Microsoft.Maui.Controls.Application.Current.MainPage.ShowPopupAsync(popup);
+            var page = Microsoft.Maui.Controls.Application.Current?.Windows.FirstOrDefault()?.Page;
+            if (page != null)
+            {
+                await page.ShowPopupAsync(popup);
+            }
+            else
+            {
+                Debug.WriteLine("[CalendarViewModel] Unable to show AddEntryPopup: no active Page found.");
+            }
         }
 
         private async void OnEditRecord()
@@ -387,7 +475,7 @@ namespace HeadacheTracker.Maui.ViewModels
 
             Debug.WriteLine($"[CalendarViewModel] Editing record Id={entryVm.Id}");
 
-            var vm = new AddEntryViewModel(_repository, _medicationRepository, entryVm.Date)
+            var vm = new AddEntryViewModel(_repository, _medicationRepository, entryVm.Date, isEditMode: true)
             {
                 IsEditMode = true,
                 ExistingEntryId = entryVm.Id
@@ -400,7 +488,16 @@ namespace HeadacheTracker.Maui.ViewModels
 
             // создаём popup
             var popup = new AddEntryPopup(vm);
-            await Microsoft.Maui.Controls.Application.Current.MainPage.ShowPopupAsync(popup);
+
+            var page = Microsoft.Maui.Controls.Application.Current?.Windows.FirstOrDefault()?.Page;
+            if (page != null)
+            {
+                await page.ShowPopupAsync(popup);
+            }
+            else
+            {
+                Debug.WriteLine("[CalendarViewModel] Unable to show AddEntryPopup: no active Page found.");
+            }
 
             // перезагружаем список после редактирования
             await LoadEntriesForSelectedDayAsync();
@@ -412,12 +509,20 @@ namespace HeadacheTracker.Maui.ViewModels
             if (SelectedHeadacheEntry == null)
                 return;
 
-            // Подтверждение удаления (можно отключить, если мешает)
-            bool confirm = await Microsoft.Maui.Controls.Application.Current.MainPage.DisplayAlert(
-                "Delete Entry",
-                "Are you sure you want to delete this record?",
-                "Yes",
-                "No");
+            var page = Microsoft.Maui.Controls.Application.Current?.Windows.FirstOrDefault()?.Page;
+            if (page == null)
+            {
+                Debug.WriteLine("[CalendarViewModel] Unable to show confirmation: no active Page found.");
+                return;
+            }
+
+            // Подтверждение удаления
+            bool confirm = await page.DisplayAlert(
+                string.Empty,
+                AppResources.DeleteEntryMessage,
+                AppResources.YesButton,
+                AppResources.NoButton
+            );
 
             if (!confirm)
                 return;
@@ -442,7 +547,6 @@ namespace HeadacheTracker.Maui.ViewModels
                     Notes = SelectedHeadacheEntry.Notes
                 });
 
-
                 // 3️⃣ Удаляем из списка UI
                 HeadacheEntriesForSelectedDay.Remove(SelectedHeadacheEntry);
 
@@ -453,15 +557,23 @@ namespace HeadacheTracker.Maui.ViewModels
                 EditRecordCommand.NotifyCanExecuteChanged();
                 DeleteRecordCommand.NotifyCanExecuteChanged();
 
-                // 6️⃣ Уведомляем календарь, если он что-то подкрашивает
-                WeakReferenceMessenger.Default.Send(new EntryAddedMessage(_selectedDay.Date));
+                // 6️⃣ Уведомляем календарь
+                WeakReferenceMessenger.Default.Send(new EntryAddedMessage(_selectedDay!.Date));
             }
             catch (Exception ex)
             {
-                await Microsoft.Maui.Controls.Application.Current.MainPage.DisplayAlert(
-                    "Error",
-                    $"Failed to delete the record: {ex.Message}",
-                    "OK");
+                if (page != null)
+                {
+                    await page.DisplayAlert(
+                        "Error",
+                        $"Failed to delete the record: {ex.Message}",
+                        "OK"
+                    );
+                }
+                else
+                {
+                    Debug.WriteLine($"[CalendarViewModel] Failed to delete the record: {ex.Message}");
+                }
             }
         }
 
@@ -470,7 +582,15 @@ namespace HeadacheTracker.Maui.ViewModels
             var vm = _services.GetRequiredService<StatisticsViewModel>();
             var page = new StatisticsPage(vm);
 
-            await Microsoft.Maui.Controls.Application.Current.MainPage.Navigation.PushAsync(page);
+            var nav = Microsoft.Maui.Controls.Application.Current?.Windows.FirstOrDefault()?.Page?.Navigation;
+            if (nav != null)
+            {
+                await nav.PushAsync(page);
+            }
+            else
+            {
+                Debug.WriteLine("[CalendarViewModel] Navigation not available.");
+            }
         }
 
         

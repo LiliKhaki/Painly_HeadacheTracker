@@ -200,4 +200,73 @@
   <data name="Year" xml:space="preserve">
     <value>Year</value>
   </data>
+  <data name="PainIntensity" xml:space="preserve">
+    <value>Pain intensity</value>
+  </data>
+  <data name="EnterIntensityText" xml:space="preserve">
+    <value>Please enter the value from 1 to 10...</value>
+  </data>
+  <data name="Notes" xml:space="preserve">
+    <value>Notes</value>
+  </data>
+  <data name="DeleteEntryMessage" xml:space="preserve">
+    <value>Are you sure you want to delete this record?</value>
+  </data>
+  <data name="YesButton" xml:space="preserve">
+    <value>Yes</value>
+  </data>
+  <data name="NoButton" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="About" xml:space="preserve">
+    <value>About</value>
+  </data>
+  <data name="SaveErrorTitle" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="SaveErrorMessage" xml:space="preserve">
+    <value>Failed to save the record. Please try again.</value>
+  </data>
+  <data name="OkButton" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="About_Title" xml:space="preserve">
+    <value>About Painly</value>
+  </data>
+  <data name="About_Subtitle" xml:space="preserve">
+    <value>Your calm and simple headache diary</value>
+  </data>
+  <data name="About_Intro" xml:space="preserve">
+    <value>Living with headaches can be unpredictable and exhausting. Painly helps you track your episodes, recognize possible triggers, and gain clarity about your condition. By keeping a structured diary, you can better support conversations with your doctor.</value>
+  </data>
+  <data name="About_Design" xml:space="preserve">
+    <value>Painly is designed with a clear and unobtrusive interface, so you can focus on your well-being instead of the app itself.</value>
+  </data>
+  <data name="Privacy_Title" xml:space="preserve">
+    <value>Privacy</value>
+  </data>
+  <data name="Privacy_Text" xml:space="preserve">
+    <value>All data you enter in Painly is stored locally on your device. No account is required, and no personal health data is sent to external servers. You remain in full control of your information.</value>
+  </data>
+  <data name="Support_Title" xml:space="preserve">
+    <value>Support the Project</value>
+  </data>
+  <data name="Support_Text" xml:space="preserve">
+    <value>Painly is an independent project developed with care. If you find it helpful and would like to support further development, you can contribute via PayPal.</value>
+  </data>
+  <data name="Support_Button" xml:space="preserve">
+    <value>Support Painly</value>
+  </data>
+  <data name="Version_Label" xml:space="preserve">
+    <value>Version</value>
+  </data>
+  <data name="PickUpIntensity" xml:space="preserve">
+    <value>Please pick up the intensity</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="Feedback_Button" xml:space="preserve">
+    <value>Report a bug</value>
+  </data>
 </root>

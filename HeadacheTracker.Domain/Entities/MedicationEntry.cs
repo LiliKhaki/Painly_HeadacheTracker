@@ -10,7 +10,7 @@ namespace HeadacheTracker.Domain.Entities
 
             public int HeadacheEntryId { get; set; } // внешний ключ
 
-            public string Medication { get; set; }         // название лекарства
+            public string? Medication { get; set; }         // название лекарства
             public double? Dose { get; set; }         // доза (например, мг)
         }
 

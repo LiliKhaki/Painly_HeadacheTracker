@@ -61,6 +61,51 @@ namespace HeadacheTracker.Maui.Resources.Strings {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die About ähnelt.
+        /// </summary>
+        public static string About {
+            get {
+                return ResourceManager.GetString("About", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Painly is designed with a clear and unobtrusive interface, so you can focus on your well-being instead of the app itself. ähnelt.
+        /// </summary>
+        public static string About_Design {
+            get {
+                return ResourceManager.GetString("About_Design", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Living with headaches can be unpredictable and exhausting. Painly helps you track your episodes, recognize possible triggers, and gain clarity about your condition. By keeping a structured diary, you can better support conversations with your doctor. ähnelt.
+        /// </summary>
+        public static string About_Intro {
+            get {
+                return ResourceManager.GetString("About_Intro", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Your calm and simple headache diary ähnelt.
+        /// </summary>
+        public static string About_Subtitle {
+            get {
+                return ResourceManager.GetString("About_Subtitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die About Painly ähnelt.
+        /// </summary>
+        public static string About_Title {
+            get {
+                return ResourceManager.GetString("About_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die + Medication ähnelt.
         /// </summary>
         public static string AddMedication {
@@ -115,6 +160,15 @@ namespace HeadacheTracker.Maui.Resources.Strings {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Are you sure you want to delete this record? ähnelt.
+        /// </summary>
+        public static string DeleteEntryMessage {
+            get {
+                return ResourceManager.GetString("DeleteEntryMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Delete Record ähnelt.
         /// </summary>
         public static string DeleteRecord {
@@ -138,6 +192,33 @@ namespace HeadacheTracker.Maui.Resources.Strings {
         public static string EditRecord {
             get {
                 return ResourceManager.GetString("EditRecord", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Please enter the value from 1 to 10... ähnelt.
+        /// </summary>
+        public static string EnterIntensityText {
+            get {
+                return ResourceManager.GetString("EnterIntensityText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Error ähnelt.
+        /// </summary>
+        public static string Error {
+            get {
+                return ResourceManager.GetString("Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Report a bug ähnelt.
+        /// </summary>
+        public static string Feedback_Button {
+            get {
+                return ResourceManager.GetString("Feedback_Button", resourceCulture);
             }
         }
         
@@ -196,6 +277,33 @@ namespace HeadacheTracker.Maui.Resources.Strings {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die No ähnelt.
+        /// </summary>
+        public static string NoButton {
+            get {
+                return ResourceManager.GetString("NoButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Notes ähnelt.
+        /// </summary>
+        public static string Notes {
+            get {
+                return ResourceManager.GetString("Notes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die OK ähnelt.
+        /// </summary>
+        public static string OkButton {
+            get {
+                return ResourceManager.GetString("OkButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Pain Episodes:  ähnelt.
         /// </summary>
         public static string PainEpisodes {
@@ -210,6 +318,42 @@ namespace HeadacheTracker.Maui.Resources.Strings {
         public static string PainFreeDays {
             get {
                 return ResourceManager.GetString("PainFreeDays", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Pain intensity ähnelt.
+        /// </summary>
+        public static string PainIntensity {
+            get {
+                return ResourceManager.GetString("PainIntensity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Please pick up the intensity ähnelt.
+        /// </summary>
+        public static string PickUpIntensity {
+            get {
+                return ResourceManager.GetString("PickUpIntensity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die All data you enter in Painly is stored locally on your device. No account is required, and no personal health data is sent to external servers. You remain in full control of your information. ähnelt.
+        /// </summary>
+        public static string Privacy_Text {
+            get {
+                return ResourceManager.GetString("Privacy_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Privacy ähnelt.
+        /// </summary>
+        public static string Privacy_Title {
+            get {
+                return ResourceManager.GetString("Privacy_Title", resourceCulture);
             }
         }
         
@@ -250,6 +394,24 @@ namespace HeadacheTracker.Maui.Resources.Strings {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Failed to save the record. Please try again. ähnelt.
+        /// </summary>
+        public static string SaveErrorMessage {
+            get {
+                return ResourceManager.GetString("SaveErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Error ähnelt.
+        /// </summary>
+        public static string SaveErrorTitle {
+            get {
+                return ResourceManager.GetString("SaveErrorTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Statistics ähnelt.
         /// </summary>
         public static string Statistics {
@@ -264,6 +426,33 @@ namespace HeadacheTracker.Maui.Resources.Strings {
         public static string SundayShort {
             get {
                 return ResourceManager.GetString("SundayShort", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Support Painly ähnelt.
+        /// </summary>
+        public static string Support_Button {
+            get {
+                return ResourceManager.GetString("Support_Button", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Painly is an independent project developed with care. If you find it helpful and would like to support further development, you can contribute via PayPal. ähnelt.
+        /// </summary>
+        public static string Support_Text {
+            get {
+                return ResourceManager.GetString("Support_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Support the Project ähnelt.
+        /// </summary>
+        public static string Support_Title {
+            get {
+                return ResourceManager.GetString("Support_Title", resourceCulture);
             }
         }
         
@@ -286,6 +475,15 @@ namespace HeadacheTracker.Maui.Resources.Strings {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Version ähnelt.
+        /// </summary>
+        public static string Version_Label {
+            get {
+                return ResourceManager.GetString("Version_Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die We ähnelt.
         /// </summary>
         public static string WednesdayShort {
@@ -300,6 +498,15 @@ namespace HeadacheTracker.Maui.Resources.Strings {
         public static string Year {
             get {
                 return ResourceManager.GetString("Year", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Yes ähnelt.
+        /// </summary>
+        public static string YesButton {
+            get {
+                return ResourceManager.GetString("YesButton", resourceCulture);
             }
         }
     }

@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using HeadacheTracker.Domain.Entities;
+using HeadacheTracker.Maui.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -28,8 +29,8 @@ namespace HeadacheTracker.Maui.ViewModels
             set => SetProperty(ref _isSelected, value);
         }
 
-        public ObservableCollection<MedicationEntry> Medications { get; set; }
-    = new ObservableCollection<MedicationEntry>();
+        public ObservableCollection<MedicationInput> Medications { get; set; }
+    = new ObservableCollection<MedicationInput>();
 
 
         public HeadacheEntry ToHeadacheEntry()

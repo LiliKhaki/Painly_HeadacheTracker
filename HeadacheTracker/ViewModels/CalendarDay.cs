@@ -26,6 +26,7 @@ namespace HeadacheTracker.Maui.ViewModels
     public class CalendarDay : ObservableObject
     {
         public DateTime Date { get; }
+        public int Index { get; set; }
 
         private bool _isToday;
         public bool IsToday

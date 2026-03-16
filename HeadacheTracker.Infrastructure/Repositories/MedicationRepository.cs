@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using SQLite;
-using HeadacheTracker.Domain.Abstractions;
+﻿using HeadacheTracker.Domain.Abstractions;
 using HeadacheTracker.Domain.Entities;
+using SQLite;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace HeadacheTracker.Infrastructure.Repositories
 {
@@ -10,10 +11,9 @@ namespace HeadacheTracker.Infrastructure.Repositories
     {
         private readonly SQLiteAsyncConnection _database;
 
-        public MedicationRepository(string dbPath)
+        public MedicationRepository(SQLiteAsyncConnection database)
         {
-            _database = new SQLiteAsyncConnection(dbPath);
-            _database.CreateTableAsync<MedicationEntry>().Wait();
+            _database = database;
         }
 
         public async Task AddAsync(MedicationEntry entry)
@@ -57,13 +57,37 @@ namespace HeadacheTracker.Infrastructure.Repositories
                 .Where(m => m.HeadacheEntryId == headacheId)
                 .ToListAsync();
 
-            foreach (var med in medications)
-            {
-                await _database.DeleteAsync(med);
-            }
+            await _database.ExecuteAsync(
+    "DELETE FROM MedicationEntry WHERE HeadacheEntryId = ?",
+    headacheId);
+
         }
 
+        public async Task<List<MedicationEntry>> GetByDateAsync(DateTime date)
+        {
+            try
+            {
+                var result = await _database.QueryAsync<MedicationEntry>(
+                    @"
+            SELECT m.Id,
+                   m.HeadacheEntryId,
+                   m.Medication,
+                   m.Dose
+            FROM MedicationEntry m
+            INNER JOIN HeadacheEntry h
+                ON m.HeadacheEntryId = h.Id
+            WHERE date(h.Date) = date(?)
+            ",
+                    date.Date);
 
+                return result;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"[MedicationRepository.GetByDateAsync] Ошибка: {ex}");
+                return new List<MedicationEntry>();
+            }
+        }
 
     }
 }

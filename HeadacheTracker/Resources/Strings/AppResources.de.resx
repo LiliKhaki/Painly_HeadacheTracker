@@ -198,4 +198,73 @@
   <data name="Year" xml:space="preserve">
     <value>Jahr</value>
   </data>
+  <data name="PainIntensity" xml:space="preserve">
+    <value>Schmerzintensität</value>
+  </data>
+  <data name="EnterIntensityText" xml:space="preserve">
+    <value>Bitte geben Sie einen Wert von 1 bis 10 ein...</value>
+  </data>
+  <data name="Notes" xml:space="preserve">
+    <value>Notizen</value>
+  </data>
+  <data name="DeleteEntryMessage" xml:space="preserve">
+    <value>Möchten Sie den Eintrag wirklich löschen?</value>
+  </data>
+  <data name="YesButton" xml:space="preserve">
+    <value>Ja</value>
+  </data>
+  <data name="NoButton" xml:space="preserve">
+    <value>Nein</value>
+  </data>
+  <data name="About" xml:space="preserve">
+    <value>Über die App</value>
+  </data>
+  <data name="SaveErrorTitle" xml:space="preserve">
+    <value>Fehler</value>
+  </data>
+  <data name="SaveErrorMessage" xml:space="preserve">
+    <value>Der Eintrag konnte nicht gespeichert werden. Bitte versuchen Sie es erneut.</value>
+  </data>
+  <data name="OkButton" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="About_Title" xml:space="preserve">
+    <value>Über Painly</value>
+  </data>
+  <data name="About_Subtitle" xml:space="preserve">
+    <value>Dein ruhiges und einfaches Kopfschmerztagebuch</value>
+  </data>
+  <data name="About_Intro" xml:space="preserve">
+    <value>Mit Kopfschmerzen zu leben kann unvorhersehbar und belastend sein. Painly hilft dir, deine Episoden zu dokumentieren, mögliche Auslöser zu erkennen und ein besseres Verständnis für deinen Zustand zu entwickeln. Mit einem strukturierten Tagebuch kannst du Gespräche mit deinem Arzt besser unterstützen.</value>
+  </data>
+  <data name="About_Design" xml:space="preserve">
+    <value>Painly wurde mit einem klaren und unaufdringlichen Design entwickelt, damit du dich auf Ihr Wohlbefinden konzentrieren könntest – und nicht auf die App selbst.</value>
+  </data>
+  <data name="Privacy_Title" xml:space="preserve">
+    <value>Datenschutz</value>
+  </data>
+  <data name="Privacy_Text" xml:space="preserve">
+    <value>Alle in Painly eingegebenen Daten werden lokal auf deinem Gerät gespeichert. Es ist kein Konto erforderlich, und keine Gesundheitsdaten werden an externe Server übertragen. Du behältst die volle Kontrolle über deine Informationen.</value>
+  </data>
+  <data name="Support_Title" xml:space="preserve">
+    <value>Projekt unterstützen</value>
+  </data>
+  <data name="Support_Text" xml:space="preserve">
+    <value>Painly ist ein unabhängiges Projekt, das mit Sorgfalt entwickelt wurde. Wenn es dir hilft und du die Weiterentwicklung unterstützen möchtest, kannst du über PayPal beitragen.</value>
+  </data>
+  <data name="Support_Button" xml:space="preserve">
+    <value>Painly unterstützen</value>
+  </data>
+  <data name="Version_Label" xml:space="preserve">
+    <value>Version</value>
+  </data>
+  <data name="PickUpIntensity" xml:space="preserve">
+    <value>Bitte wählen Sie die Intensität der Kopfschmerzen aus</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>Fehler</value>
+  </data>
+  <data name="Feedback_Button" xml:space="preserve">
+    <value>Fehler melden</value>
+  </data>
 </root>

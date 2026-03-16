@@ -1,18 +1,31 @@
-﻿using Microsoft.Maui;
+﻿using HeadacheTracker.Maui.Helpers;// 👈 Явное указание, какой Application использовать
+using Microsoft.Maui;
 using Microsoft.Maui.Controls;
 using Application = Microsoft.Maui.Controls.Application;
-using HeadacheTracker.Maui.Helpers;// 👈 Явное указание, какой Application использовать
+using HeadacheTracker.Infrastructure;
 
 namespace HeadacheTracker.Maui
 {
     public partial class App : IApplication
     {
-        public App(MainPage mainPage)
+        private readonly DatabaseInitializer _initializer;
+        private readonly MainPage _mainPage;
+       
+
+        public App(DatabaseInitializer initializer, MainPage mainPage)
         {
             InitializeComponent();
-            MainPage = new NavigationPage(mainPage);
+            _initializer = initializer;
+            _mainPage = mainPage;
 
+            UserAppTheme = AppTheme.Dark;
+
+            Task.Run(async () => await _initializer.InitializeAsync());
         }
 
+        protected override Window CreateWindow(IActivationState? activationState)
+        {
+            return new Window(new NavigationPage(_mainPage));
+        }
     }
 }

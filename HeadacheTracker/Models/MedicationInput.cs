@@ -10,7 +10,7 @@ namespace HeadacheTracker.Maui.Models
     public class MedicationInput : ObservableObject
     {
         public int Id { get; set; }
-        private string _name;
+        private string _name = string.Empty;
         public string Name
         {
             get => _name;

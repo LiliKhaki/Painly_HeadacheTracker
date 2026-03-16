@@ -6,32 +6,151 @@
     <Application.Resources>
         <ResourceDictionary>
 
-            <!-- Light colors -->
-            <Color x:Key="LightPrimaryColor">#70C28F</Color>
-            <Color x:Key="LightSecondaryColor">#A7D9B2</Color>
+            <!-- ===== COLORS ===== -->
 
-            <!-- Dark colors -->
-            <Color x:Key="DarkPrimaryColor">#4B8A5F</Color>
-            <Color x:Key="DarkSecondaryColor">#6FA785</Color>
+            <!-- Primary (глубокий приглушенный зеленый) -->
+            <Color x:Key="LightPrimaryColor">#3E7D62</Color>
+            <Color x:Key="DarkPrimaryColor">#2E5948</Color>
 
-            <Color x:Key="LightBackgroundColor">#E6F2EB</Color>
-            <Color x:Key="DarkBackgroundColor">#1E2A24</Color>
+            <!-- Secondary (нейтральный серо-зеленый) -->
+            <Color x:Key="LightSecondaryColor">#A0B5A1</Color>
+            <Color x:Key="DarkSecondaryColor">#667766</Color>
+
+            <!-- Background -->
+            <Color x:Key="BackgroundLight">#F0F2F1</Color>
+            <Color x:Key="BackgroundDark">#1C2420</Color>
+
+            <!-- Surface -->
+            <Color x:Key="SurfaceLight">#FFFFFF</Color>
+            <Color x:Key="SurfaceDark">#2A3530</Color>
+
+            <!-- Text -->
+            <Color x:Key="TextPrimaryLight">#1E2C27</Color>
+            <Color x:Key="TextPrimaryDark">#E1E6E1</Color>
+
+            <Color x:Key="TextSecondaryLight">#5C6C60</Color>
+            <Color x:Key="TextSecondaryDark">#A0B0A0</Color>
+
+            <!-- Panel / Layout -->
+            <Color x:Key="PanelLight">#E6ECE5</Color>
+            <Color x:Key="PanelDark">#27332C</Color>
 
 
-            <Style x:Key="ButtonStyle"
-               TargetType="Button">
-                <Setter Property="BackgroundColor"
-                    Value="{AppThemeBinding Light={StaticResource LightPrimaryColor}, Dark={StaticResource DarkPrimaryColor}}" />
-                <Setter Property="TextColor"
-                    Value="{AppThemeBinding Light={StaticResource LightSecondaryColor}, Dark={StaticResource DarkSecondaryColor}}" />
-            </Style>
-            
+            <!-- ================= PAGE ================= -->
+
             <Style TargetType="ContentPage">
                 <Setter Property="BackgroundColor"
-        Value="{AppThemeBinding 
-            Light={StaticResource LightBackgroundColor},
-            Dark={StaticResource DarkBackgroundColor}}" />
+                        Value="{AppThemeBinding
+                                Light={DynamicResource BackgroundLight},
+                                Dark={DynamicResource BackgroundDark}}" />
             </Style>
+
+
+            <!-- ================= TEXT ================= -->
+
+            <Style x:Key="PrimaryTextStyle" TargetType="Label">
+                <Setter Property="FontSize" Value="14" />
+                <Setter Property="LineHeight" Value="1.4" />
+                <Setter Property="TextColor"
+                        Value="{AppThemeBinding Light={DynamicResource TextPrimaryLight}, Dark={DynamicResource TextPrimaryDark}}" />
+            </Style>
+
+            <Style x:Key="SecondaryTextStyle" TargetType="Label">
+                <Setter Property="FontSize" Value="13" />
+                <Setter Property="LineHeight" Value="1.35" />
+                <Setter Property="TextColor"
+                        Value="{AppThemeBinding Light={DynamicResource TextSecondaryLight}, Dark={DynamicResource TextSecondaryDark}}" />
+            </Style>
+
+            <Style x:Key="TitleTextStyle" TargetType="Label">
+                <Setter Property="FontSize" Value="18" />
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="LineHeight" Value="1.3" />
+                <Setter Property="TextColor"
+                        Value="{AppThemeBinding Light={DynamicResource TextPrimaryLight}, Dark={DynamicResource TextPrimaryDark}}" />
+            </Style>
+
+            <Style x:Key="SectionHeaderTextStyle" TargetType="Label">
+                <Setter Property="FontSize" Value="16" />
+                <!--<Setter Property="FontAttributes" Value="Bold" />-->
+                <Setter Property="LineHeight" Value="1.25" />
+                <Setter Property="TextColor"
+                        Value="{AppThemeBinding Light={DynamicResource TextPrimaryLight}, Dark={DynamicResource TextPrimaryDark}}" />
+            </Style>
+
+            <Style x:Key="MonthHeaderTextStyle" TargetType="Label">
+                <Setter Property="FontSize" Value="18" />
+                <!--<Setter Property="FontAttributes" Value="Bold" />-->
+                <Setter Property="LineHeight" Value="1.3" />
+                <Setter Property="TextColor"
+                        Value="{AppThemeBinding Light={DynamicResource TextPrimaryLight}, Dark={DynamicResource TextPrimaryDark}}" />
+            </Style>
+
+
+            <!-- ================= SURFACE (cards, calendar cells, records) ================= -->
+
+            <Style x:Key="SurfaceStyle" TargetType="Border">
+                <Setter Property="BackgroundColor"
+                        Value="{AppThemeBinding Light={DynamicResource SurfaceLight}, Dark={DynamicResource SurfaceDark}}" />
+                <Setter Property="StrokeThickness" Value="0" />
+                <Setter Property="StrokeShape" Value="RoundRectangle 10" />
+                <Setter Property="Padding" Value="2" />
+                <Setter Property="Shadow">
+                    <Setter.Value>
+                        <Shadow Offset="0,3" Radius="8" Opacity="0.12" />
+                    </Setter.Value>
+                </Setter>
+            </Style>  
+
+
+            <!-- ================= BUTTONS ================= -->
+
+            <!-- Primary Button -->
+            <Style x:Key="PrimaryButtonStyle" TargetType="Button">
+                <Setter Property="HeightRequest" Value="46" />
+                <Setter Property="CornerRadius" Value="6" />
+                <!-- мягкий квадрат -->
+                <Setter Property="BackgroundColor"
+                        Value="{AppThemeBinding Light={DynamicResource LightPrimaryColor}, Dark={DynamicResource DarkPrimaryColor}}" />
+                <Setter Property="TextColor" Value="White"/>
+                <Setter Property="Shadow">
+                    <Setter.Value>
+                        <Shadow Offset="0,3" Radius="6" Opacity="0.15" />
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <!-- Secondary Button -->
+            <Style x:Key="SecondaryButtonStyle" TargetType="Button">
+                <Setter Property="HeightRequest" Value="46" />
+                <Setter Property="CornerRadius" Value="6" />
+                <!-- мягкий квадрат -->
+                <Setter Property="BackgroundColor"
+                        Value="{AppThemeBinding Light={DynamicResource LightSecondaryColor}, Dark={DynamicResource DarkSecondaryColor}}" />
+                <Setter Property="TextColor"
+                        Value="{AppThemeBinding Light={DynamicResource TextPrimaryLight}, Dark={DynamicResource TextPrimaryDark}}" />
+                <Setter Property="Shadow">
+                    <Setter.Value>
+                        <Shadow Offset="0,2" Radius="6" Opacity="0.1" />
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+
+            <!-- ================= PANEL ================= -->
+
+            <Style x:Key="PanelStyle" TargetType="Grid">
+                <Setter Property="BackgroundColor"
+                        Value="{AppThemeBinding
+                                Light={DynamicResource PanelLight},
+                                Dark={DynamicResource PanelDark}}" />
+                <Setter Property="Padding" Value="6" />
+            </Style>
+
+         
+
+
+
         </ResourceDictionary>
     </Application.Resources>
 </Application>

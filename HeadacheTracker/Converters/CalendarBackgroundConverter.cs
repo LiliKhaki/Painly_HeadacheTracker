@@ -17,13 +17,20 @@ namespace HeadacheTracker.Maui.Converters
                 bool isToday = values[1] is bool b2 && b2;
                 bool isSelected = values[2] is bool b3 && b3;
 
-                // Приоритет подсветки
+                // * Приоритет подсветки
+                // if (isSelected)
+                //    return Colors.Transparent; //  при выборе, альтернатива #E6ECE5 
+                //if (isToday)
+                //return Colors.Transparent; //  для сегодняшнего дня
+                //if (hasEntry)
+                //return Colors.Transparent; // если есть запись
+
                 if (isSelected)
-                    return Color.FromArgb("#CCE0FF"); // светло-синий фон при выборе
+                    return Color.FromArgb("#7B9EB1"); // приглушенный синий
                 if (isToday)
-                    return Color.FromArgb("#FFF4E6"); // мягкий оранжевый фон для сегодняшнего дня
+                    return Color.FromArgb("#D66A5E"); // приглушённый красный
                 if (hasEntry)
-                    return Color.FromArgb("#FFE6E6"); // розоватый фон, если есть запись
+                    return Color.FromArgb("#70A088"); // приглушённый зелёный
 
                 return Colors.Transparent;
             }

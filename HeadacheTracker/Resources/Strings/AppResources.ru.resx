@@ -198,4 +198,73 @@
   <data name="Year" xml:space="preserve">
     <value>Год</value>
   </data>
+  <data name="PainIntensity" xml:space="preserve">
+    <value>Интенсивность боли</value>
+  </data>
+  <data name="EnterIntensityText" xml:space="preserve">
+    <value>Пожалуйста, введите значение от 1 до 10...</value>
+  </data>
+  <data name="Notes" xml:space="preserve">
+    <value>Комментарий</value>
+  </data>
+  <data name="DeleteEntryMessage" xml:space="preserve">
+    <value>Вы действительно хотите удалить эту запись?</value>
+  </data>
+  <data name="YesButton" xml:space="preserve">
+    <value>Да</value>
+  </data>
+  <data name="NoButton" xml:space="preserve">
+    <value>Нет</value>
+  </data>
+  <data name="About" xml:space="preserve">
+    <value>О приложении</value>
+  </data>
+  <data name="SaveErrorTitle" xml:space="preserve">
+    <value>Ошибка</value>
+  </data>
+  <data name="SaveErrorMessage" xml:space="preserve">
+    <value>Не удалось сохранить запись. Попробуйте снова.</value>
+  </data>
+  <data name="OkButton" xml:space="preserve">
+    <value>ОК</value>
+  </data>
+  <data name="About_Title" xml:space="preserve">
+    <value>О Painly</value>
+  </data>
+  <data name="About_Subtitle" xml:space="preserve">
+    <value>Ваш спокойный и простой дневник головной боли</value>
+  </data>
+  <data name="About_Intro" xml:space="preserve">
+    <value>Жизнь с головной болью может быть непредсказуемой и изматывающей. Painly помогает фиксировать эпизоды, распознавать возможные триггеры и лучше понимать своё состояние. Ведение структурированного дневника помогает продуктивнее обсуждать состояние с врачом.</value>
+  </data>
+  <data name="About_Design" xml:space="preserve">
+    <value>Painly создан с понятным и ненавязчивым дизайном, чтобы вы могли сосредоточиться на своём самочувствии, а не на интерфейсе.</value>
+  </data>
+  <data name="Privacy_Title" xml:space="preserve">
+    <value>Конфиденциальность</value>
+  </data>
+  <data name="Privacy_Text" xml:space="preserve">
+    <value>Все данные, введённые в Painly, хранятся локально на вашем устройстве. Регистрация не требуется, и личные медицинские данные не передаются на внешние серверы. Вы полностью контролируете свою информацию.</value>
+  </data>
+  <data name="Support_Title" xml:space="preserve">
+    <value>Поддержать проект</value>
+  </data>
+  <data name="Support_Text" xml:space="preserve">
+    <value>Painly — независимый проект, созданный с заботой. Если приложение оказалось полезным и вы хотите поддержать дальнейшее развитие, вы можете сделать вклад через PayPal.</value>
+  </data>
+  <data name="Support_Button" xml:space="preserve">
+    <value>Поддержать Painly</value>
+  </data>
+  <data name="Version_Label" xml:space="preserve">
+    <value>Версия</value>
+  </data>
+  <data name="PickUpIntensity" xml:space="preserve">
+    <value>Пожалуйста, выберите интенсивность</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>Ошибка</value>
+  </data>
+  <data name="Feedback_Button" xml:space="preserve">
+    <value>Сообщить об ошибке</value>
+  </data>
 </root>

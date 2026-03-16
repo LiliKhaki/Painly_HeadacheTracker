@@ -21,7 +21,7 @@
 		<Nullable>enable</Nullable>
 
 		<!-- Display name -->
-		<ApplicationTitle>HeadacheTracker</ApplicationTitle>
+		<ApplicationTitle>Painly</ApplicationTitle>
 
 		<!-- App Identifier -->
 		<ApplicationId>com.companyname.headachetracker</ApplicationId>
@@ -43,12 +43,11 @@
 
 	<ItemGroup>
 		<!-- App Icon -->
-		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
+		<MauiIcon Include="Resources\AppIcon\appicon.svg" />
+
 
 		<!-- Splash Screen -->
-		<MauiSplashScreen
-    Include="Resources\Splash\splash.svg"
-    Color="#E6F2EB" />
+		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#E6F2EB" />
 
 
 		<!-- Images -->
@@ -91,6 +90,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiXaml Update="Views\AboutPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\AddEntryPopup.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
@@ -103,3 +105,4 @@
 	</ItemGroup>
 
 </Project>
+ 

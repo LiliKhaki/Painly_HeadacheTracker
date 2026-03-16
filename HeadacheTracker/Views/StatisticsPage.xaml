@@ -4,53 +4,121 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:HeadacheTracker.Maui.Views"
     xmlns:resources="clr-namespace:HeadacheTracker.Maui.Resources.Strings"
+    xmlns:vm="clr-namespace:HeadacheTracker.Maui.ViewModels"
     x:Class="HeadacheTracker.Maui.Views.StatisticsPage"
+    x:DataType="vm:StatisticsViewModel"
     Title="Statistics">
-    
-    
 
     <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="15" BackgroundColor="{AppThemeBinding 
+                        Light={DynamicResource PanelLight}, 
+                        Dark={DynamicResource PanelDark}}">
 
+            <!-- Заголовок периода -->
+            <Label
+                Text="{Binding PeriodLabel}"
+                Style="{DynamicResource TitleTextStyle}"
+                HorizontalOptions="Center" />
 
-        <VerticalStackLayout Padding="20" Spacing="15">
-            <Label Text="{Binding PeriodLabel}" FontAttributes="Bold" FontSize="18" HorizontalOptions="Center" />
-
+            <!-- Год -->
             <HorizontalStackLayout Spacing="10">
-                <Label Text="{x:Static resources:AppResources.Year}" VerticalOptions="Center"/>
-                <Picker ItemsSource="{Binding Years}" SelectedItem="{Binding SelectedYear}" WidthRequest="100"/>
+                <Label
+                    Text="{x:Static resources:AppResources.Year}"
+                    Style="{DynamicResource SecondaryTextStyle}"
+                    VerticalOptions="Center" />
+
+                <Picker
+                    ItemsSource="{Binding Years}"
+                    SelectedItem="{Binding SelectedYear}"
+                    WidthRequest="100"
+                    BackgroundColor="{AppThemeBinding 
+        Light={DynamicResource SurfaceLight}, 
+        Dark={DynamicResource SurfaceDark}}"
+    TextColor="{AppThemeBinding 
+        Light={DynamicResource TextPrimaryLight}, 
+        Dark={DynamicResource TextPrimaryDark}}"  />
             </HorizontalStackLayout>
 
+            <!-- Месяц -->
             <HorizontalStackLayout Spacing="10">
-                <Label Text="{x:Static resources:AppResources.Month}" VerticalOptions="Center"/>
-              
-                <Picker ItemsSource="{Binding Months}" SelectedIndex="{Binding SelectedMonthIndex}" WidthRequest="150" />
+                <Label
+                    Text="{x:Static resources:AppResources.Month}"
+                    Style="{DynamicResource SecondaryTextStyle}"
+                    VerticalOptions="Center" />
 
-            </HorizontalStackLayout>
+                <Picker
+                    ItemsSource="{Binding Months}"
+                    SelectedIndex="{Binding SelectedMonthIndex}"
+                    WidthRequest="150"
+                    BackgroundColor="{AppThemeBinding 
+        Light={DynamicResource SurfaceLight}, 
+        Dark={DynamicResource SurfaceDark}}"
+    TextColor="{AppThemeBinding 
+        Light={DynamicResource TextPrimaryLight}, 
+        Dark={DynamicResource TextPrimaryDark}}"  />
+            </HorizontalStackLayout> 
 
-            <!-- Кнопка обновления статистики -->
+            <!-- Кнопка обновления -->
             <Button
-    Text="{x:Static resources:AppResources.Refresh}"
-    Command="{Binding RefreshStatisticsCommand}" />
+                Text="{x:Static resources:AppResources.Refresh}"
+                Command="{Binding RefreshStatisticsCommand}"
+                Style="{DynamicResource PrimaryButtonStyle}" />
 
-            <Border Padding="10"   StrokeShape="RoundRectangle 8" BackgroundColor="#f0f0f0">
+            <!-- Панель статистики -->
+            <Border
+                Style="{DynamicResource SurfaceStyle}"
+                Padding="12">
+
                 <VerticalStackLayout Spacing="8">
-                    <Label Text="{x:Static resources:AppResources.DaysWithPain}"/>
-                    <Label Text="{Binding Summary.DaysWithPain}" FontAttributes="Bold"/>
 
-                    <Label Text="{x:Static resources:AppResources.PainEpisodes}"/>
-                    <Label Text="{Binding Summary.PainEpisodes}" FontAttributes="Bold"/>
+                    <Label
+                        Text="{x:Static resources:AppResources.DaysWithPain}"
+                        Style="{DynamicResource SecondaryTextStyle}" />
+                    <Label
+                        Text="{Binding Summary.DaysWithPain}"
+                        Style="{DynamicResource PrimaryTextStyle}"
+                        FontAttributes="Bold" />
 
-                    <Label Text="{x:Static resources:AppResources.AverageIntensity}"/>
-                    <Label Text="{Binding Summary.AverageIntensity}" FontAttributes="Bold"/>
+                    <Label
+                        Text="{x:Static resources:AppResources.PainEpisodes}"
+                        Style="{DynamicResource SecondaryTextStyle}" />
+                    <Label
+                        Text="{Binding Summary.PainEpisodes}"
+                        Style="{DynamicResource PrimaryTextStyle}"
+                        FontAttributes="Bold" />
 
-                    <Label Text="{x:Static resources:AppResources.PainFreeDays}"/>
-                    <Label Text="{Binding Summary.PainFreeDays}" FontAttributes="Bold"/>
+                    <Label
+                        Text="{x:Static resources:AppResources.AverageIntensity}"
+                        Style="{DynamicResource SecondaryTextStyle}" />
+                    <Label
+                        Text="{Binding Summary.AverageIntensity}"
+                        Style="{DynamicResource PrimaryTextStyle}"
+                        FontAttributes="Bold" />
 
-                    <Label Text="{x:Static resources:AppResources.LongestPainFreeStreak}"/>
-                    <Label Text="{Binding Summary.LongestPainFreeStreak}" FontAttributes="Bold"/>
+                    <Label
+                        Text="{x:Static resources:AppResources.PainFreeDays}"
+                        Style="{DynamicResource SecondaryTextStyle}" />
+                    <Label
+                        Text="{Binding Summary.PainFreeDays}"
+                        Style="{DynamicResource PrimaryTextStyle}"
+                        FontAttributes="Bold" />
 
-                    <Label Text="{x:Static resources:AppResources.DaysWithMedication}"/>
-                    <Label Text="{Binding Summary.DaysWithMedication}" FontAttributes="Bold"/>
+                    <Label
+                        Text="{x:Static resources:AppResources.LongestPainFreeStreak}"
+                        Style="{DynamicResource SecondaryTextStyle}" />
+                    <Label
+                        Text="{Binding Summary.LongestPainFreeStreak}"
+                        Style="{DynamicResource PrimaryTextStyle}"
+                        FontAttributes="Bold" />
+
+                    <Label
+                        Text="{x:Static resources:AppResources.DaysWithMedication}"
+                        Style="{DynamicResource SecondaryTextStyle}" />
+                    <Label
+                        Text="{Binding Summary.DaysWithMedication}"
+                        Style="{DynamicResource PrimaryTextStyle}"
+                        FontAttributes="Bold" />
+
                 </VerticalStackLayout>
             </Border>
 

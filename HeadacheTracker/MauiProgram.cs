@@ -1,10 +1,14 @@
 ﻿using CommunityToolkit.Maui;
 using HeadacheTracker.Application.UseCases;
 using HeadacheTracker.Domain.Abstractions;
+using HeadacheTracker.Infrastructure;
 using HeadacheTracker.Infrastructure.Repositories;
 using HeadacheTracker.Maui.Services;
 using HeadacheTracker.Maui.ViewModels;
 using HeadacheTracker.Maui.Views;
+using Microsoft.Maui.Controls.Handlers.Items;
+using SQLite;
+
 
 namespace HeadacheTracker.Maui
 {
@@ -13,6 +17,8 @@ namespace HeadacheTracker.Maui
         public static MauiApp CreateMauiApp()
         {
             var builder = MauiApp.CreateBuilder();
+
+
 
             builder
                 .UseMauiApp<App>()
@@ -26,25 +32,35 @@ namespace HeadacheTracker.Maui
 
             builder.Services.AddTransient<MainPage>();
 
-            // Repositories           
-            builder.Services.AddSingleton<IMedicationRepository>(new MedicationRepository(dbPath));
-            builder.Services.AddSingleton<IHeadacheRepository>(sp =>
+            builder.Services.AddSingleton<SQLiteAsyncConnection>(sp =>
             {
-                var medicationRepo = sp.GetRequiredService<IMedicationRepository>();
-                return new HeadacheRepository(dbPath, medicationRepo);
+                return new SQLiteAsyncConnection(dbPath);
             });
+            builder.Services.AddSingleton<DatabaseInitializer>();
+
+
+            // Repositories           
+            builder.Services.AddSingleton<IMedicationRepository, MedicationRepository>();
+            builder.Services.AddSingleton<IHeadacheRepository, HeadacheRepository>();
+
             // Use cases
             builder.Services.AddTransient<GetHeadachesByMonth>();
 
+            // Pages
+            builder.Services.AddTransient<MainPage>();
+            builder.Services.AddTransient<StatisticsPage>();
+            builder.Services.AddTransient<AboutPage>();
+
             // ViewModels
-            builder.Services.AddTransient<CalendarViewModel>();
+            builder.Services.AddSingleton<CalendarViewModel>();
             builder.Services.AddTransient<AddEntryViewModel>();
-            builder.Services.AddTransient<StatisticsViewModel>();
+            builder.Services.AddSingleton<StatisticsViewModel>();
             builder.Services.AddTransient<StatisticsService>();
 
-
-            // Popups (можно регистрировать, они сами подцепят DI)
+            // Popups
             builder.Services.AddTransient<AddEntryPopup>();
+
+            CollectionViewHandler.Mapper.AppendToMapping("Optimize", (handler, view) => { });
 
             return builder.Build();
         }

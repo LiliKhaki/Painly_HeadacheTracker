@@ -7,20 +7,18 @@ namespace HeadacheTracker.Infrastructure.Repositories;
 
 public class HeadacheRepository : IHeadacheRepository
 {
-    private readonly SQLiteAsyncConnection _db;
+    private readonly SQLiteAsyncConnection _database;
     private readonly IMedicationRepository _medicationRepository;
 
-    public HeadacheRepository(string dbPath, IMedicationRepository medicationRepository )
+    public HeadacheRepository(SQLiteAsyncConnection database, IMedicationRepository medicationRepository )
     {
-        _db = new SQLiteAsyncConnection(dbPath);
-        _db.CreateTableAsync<HeadacheEntry>().Wait();
-        _db.CreateTableAsync<MedicationEntry>().Wait();
+        _database = database;
         _medicationRepository = medicationRepository;
     }
 
     public async Task<List<HeadacheEntry>> GetByMonthAsync(int year, int month)
     {
-        var all = await _db.Table<HeadacheEntry>().ToListAsync();
+        var all = await _database.Table<HeadacheEntry>().ToListAsync();
         Debug.WriteLine("=== ALL HEADACHE ENTRIES IN DB ===");
         foreach (var e in all)
         {
@@ -37,7 +35,7 @@ public class HeadacheRepository : IHeadacheRepository
             Debug.WriteLine($"[DB] Id={e.Id}, Date={e.Date:O}, Kind={e.Date.Kind}, Intensity={e.Intensity}");
         }
 
-        var headaches = await _db.Table<HeadacheEntry>()
+        var headaches = await _database.Table<HeadacheEntry>()
        .Where(e => e.Date >= firstDay && e.Date < firstDayNextMonth)
        .ToListAsync();
 
@@ -53,7 +51,7 @@ public class HeadacheRepository : IHeadacheRepository
     // Добавить новую запись
     public async Task AddAsync(HeadacheEntry entry)
     {
-        await _db.InsertAsync(entry);
+        await _database.InsertAsync(entry);
 
         System.Diagnostics.Debug.WriteLine($"[Debug] Added HeadacheEntry: Id={entry.Id}, Date={entry.Date}");
 
@@ -63,13 +61,13 @@ public class HeadacheRepository : IHeadacheRepository
     public async Task DeleteAsync(HeadacheEntry entry)
     {
         await _medicationRepository.DeleteByHeadacheIdAsync(entry.Id);
-        await _db.DeleteAsync(entry);
+        await _database.DeleteAsync(entry);
     }
 
     // Обновить запись
     public async Task UpdateAsync(HeadacheEntry entry)
     {
-        await _db.UpdateAsync(entry);
+        await _database.UpdateAsync(entry);
     }
 
 
@@ -80,14 +78,45 @@ public class HeadacheRepository : IHeadacheRepository
         var start = date.Date;
         var end = start.AddDays(1);
 
-        return await _db.Table<HeadacheEntry>()
+        return await _database.Table<HeadacheEntry>()
             .Where(x => x.Date >= start && x.Date < end)
             .ToListAsync();
     }
 
     public async Task<List<HeadacheEntry>> GetAllAsync()
     {
-        return await _db.Table<HeadacheEntry>().ToListAsync();
+        return await _database.Table<HeadacheEntry>().ToListAsync();
     }
+
+    public async Task<List<(HeadacheEntry Headache, MedicationEntry? Medication)>>
+    GetByDateWithMedicationsAsync(DateTime date)
+    {
+        var start = date.Date;
+        var end = start.AddDays(1);
+
+        var result = await _database.QueryAsync<HeadacheMedicationDto>(
+            @"
+        SELECT 
+            h.Id as HeadacheId,
+            h.Date,
+            h.Intensity,
+            h.Notes,
+
+            m.Id as MedicationId,
+            m.HeadacheEntryId,
+            m.Medication,
+            m.Dose
+
+        FROM HeadacheEntry h
+        LEFT JOIN MedicationEntry m
+            ON h.Id = m.HeadacheEntryId
+
+        WHERE h.Date >= ? AND h.Date < ?
+        ",
+            start, end);
+
+        return result.Select(r => r.ToTuple()).ToList();
+    }
+
 
 }

@@ -1,5 +1,21 @@
 ﻿<?xml version="1.0" encoding="UTF-8" ?>
 <?xaml-comp compile="true" ?>
+<!--
+Pseudocode / Plan (schrittweise, detailliert):
+1. Fehleranalyse:
+   - XLS0413 meldet, dass die Attribute 'name' und 'parent' nicht zum Typ 'Style' gehören.
+   - In XAML heißen die korrekten Attribute für Styles: 'x:Key' (statt 'name') und 'BasedOn' (statt 'parent').
+2. Korrektur:
+   - Ersetze das Attribut 'name' durch 'x:Key'.
+   - Ersetze das Attribut 'parent' durch 'BasedOn' und referenziere den gewünschten Style über {StaticResource ...}.
+3. Randbedingungen / Hinweis:
+   - Wenn die Resource 'Theme.MaterialComponents.DayNight' kein Style ist oder nicht als StaticResource vorhanden ist,
+     dann muss entweder ein passender Style-Resource-Eintrag existieren oder das BasedOn entfernt / angepasst werden.
+   - Diese Änderung behebt die XLS0413-Diagnosen, indem gültige XAML-Eigenschaften verwendet werden.
+4. Anwendung:
+   - Die einzige geänderte Zeile ist die Style-Deklaration für 'NoRippleCollectionViewItem'.
+   - Alle anderen Zeilen bleiben unverändert, um Seiteneffekte zu vermeiden.
+-->
 <ResourceDictionary 
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
@@ -12,6 +28,10 @@
         <Setter Property="IndicatorColor" Value="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray500}}"/>
         <Setter Property="SelectedIndicatorColor" Value="{AppThemeBinding Light={StaticResource Gray950}, Dark={StaticResource Gray100}}"/>
     </Style>
+  
+
+   
+
 
     <Style TargetType="Border">
         <Setter Property="Stroke" Value="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray500}}" />

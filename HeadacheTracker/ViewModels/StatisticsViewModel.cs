@@ -19,27 +19,49 @@ namespace HeadacheTracker.Maui.ViewModels
         private readonly IHeadacheRepository _headacheRepository;
         private readonly IMedicationRepository _medicationRepository;
 
-        [ObservableProperty]
-        private ObservableCollection<int> years;
+        private ObservableCollection<int> _years = new ObservableCollection<int>();
+        public ObservableCollection<int> Years
+        {
+            get => _years;
+            set => SetProperty(ref _years, value);
+        }
 
-        [ObservableProperty]
-        private ObservableCollection<string> months;
+        private ObservableCollection<string> _months = new ObservableCollection<string>();
+        public ObservableCollection<string> Months
+        {
+            get => _months;
+            set => SetProperty(ref _months, value);
+        }
 
-        [ObservableProperty]
-        private string periodLabel;
+        private string _periodLabel = string.Empty;
+        public string PeriodLabel
+        {
+            get => _periodLabel;
+            set => SetProperty(ref _periodLabel, value);
+        }
 
-        [ObservableProperty]
-        private int selectedYear;
+        private int _selectedYear;
+        public int SelectedYear
+        {
+            get => _selectedYear;
+            set => SetProperty(ref _selectedYear, value);
+        }
 
-        
 
-        [ObservableProperty]
-        private StatisticsSummary summary;
+        private StatisticsSummary summary = new StatisticsSummary();
+        public StatisticsSummary Summary
+       {
+            get => summary;
+            set => SetProperty(ref summary, value);
+        }
 
-        [ObservableProperty]
+       
         private int selectedMonthIndex; // 0..11
-
-     
+        public int SelectedMonthIndex
+        {
+            get => selectedMonthIndex;
+            set => SetProperty(ref selectedMonthIndex, value);
+        }
 
 
         public StatisticsViewModel(IHeadacheRepository repository, IMedicationRepository medicationRepository, StatisticsService service)
@@ -50,6 +72,9 @@ namespace HeadacheTracker.Maui.ViewModels
             Summary = new StatisticsSummary();
 
             var now = DateTime.Now;
+
+            // Инициализация periodLabel текущим месяцем и годом
+    PeriodLabel = $"{CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(now.Month)} {now.Year}";
 
             Years = new ObservableCollection<int>(
                 Enumerable.Range(now.Year - 5, 6)
@@ -71,7 +96,7 @@ namespace HeadacheTracker.Maui.ViewModels
 
         public async Task LoadStatisticsAsync()
         {
-            var monthNumber = selectedMonthIndex + 1;
+            var monthNumber = SelectedMonthIndex + 1;
 
             var periodStart = new DateTime(SelectedYear, monthNumber, 1);
             var periodEnd = periodStart.AddMonths(1).AddDays(-1);
@@ -92,7 +117,7 @@ namespace HeadacheTracker.Maui.ViewModels
 
 
             // Aktualisieren der Periodenbeschriftung
-            periodLabel = $"{CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(SelectedMonthIndex)} {SelectedYear}";
+           PeriodLabel = $"{CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(SelectedMonthIndex)} {SelectedYear}";
         }
 
         [RelayCommand]

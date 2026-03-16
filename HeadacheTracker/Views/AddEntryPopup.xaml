@@ -4,73 +4,134 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:local="clr-namespace:HeadacheTracker.Maui.Resources.Strings"
-    
+    xmlns:vm="clr-namespace:HeadacheTracker.Maui.ViewModels"
+    xmlns:models="clr-namespace:HeadacheTracker.Maui.Models"
     x:Class="HeadacheTracker.Maui.Views.AddEntryPopup"
-    HorizontalOptions="Center">
+    x:DataType="vm:AddEntryViewModel"
+    x:Name="ThisPopup">
+    <Grid  >
 
-    <ScrollView Orientation="Vertical">
-        <VerticalStackLayout Padding="20" Spacing="12"
-                             HorizontalOptions="Fill"
-                             x:Name="RootLayout">
+        <!-- Фон, ловящий тап -->
+        <BoxView BackgroundColor="Transparent">
+            <BoxView.GestureRecognizers>
+                <TapGestureRecognizer Tapped="OnBackgroundTapped"/>
+            </BoxView.GestureRecognizers>
+        </BoxView>
 
-            <!-- Заголовок -->
-            <Label Text="{Binding Title}"
-                   FontAttributes="Bold"
-                   FontSize="20"
-                   HorizontalOptions="Center" />
+        <VerticalStackLayout
+        Padding="20"
+        Spacing="10"
+        HorizontalOptions="Fill"
+        BackgroundColor="{AppThemeBinding Light={DynamicResource SurfaceLight}, Dark={DynamicResource SurfaceDark}}"
+        x:Name="RootLayout"
+            >
 
-            <!-- Интенсивность -->
-            <Entry Placeholder="Intensity"
-                   Keyboard="Numeric"
-                   Text="{Binding Intensity}"
-                   HorizontalOptions="Fill" />
+      
+        <!-- Заголовок -->
+        <Label
+            Text="{Binding Title}"
+            Style="{DynamicResource TitleTextStyle}"
+            HorizontalOptions="Center" />
 
-            <!-- Notes -->
-            <Editor Placeholder="Notes"
-                    HeightRequest="100"
-                    Text="{Binding Notes}"
-                    HorizontalOptions="Fill" />
+        <!-- Интенсивность -->
+        <Label
+            Text="{x:Static local:AppResources.PainIntensity}"
+            Style="{DynamicResource SecondaryTextStyle}" />
 
-            <!-- Список медикаментов -->
-            <Label Text="{x:Static local:AppResources.Medications}"
-                   FontAttributes="Bold"
-                   Margin="0,10,0,0"/>
+        <Border Style="{DynamicResource SurfaceStyle}" Padding="4">
+            <Picker ItemsSource="{Binding Intensities}" SelectedItem="{Binding Intensity, Mode=TwoWay}" BackgroundColor="Transparent" TextColor="{AppThemeBinding Light={DynamicResource LightTextPrimaryColor}, Dark={DynamicResource DarkTextPrimaryColor}}" TitleColor="{AppThemeBinding Light={DynamicResource LightTextSecondaryColor}, Dark={DynamicResource DarkTextSecondaryColor}}" HorizontalOptions="Fill" />
+        </Border>
 
-            <CollectionView ItemsSource="{Binding Medications}" SelectionMode="None"
-                            HorizontalOptions="Fill">
+
+        <!-- Notes -->
+        <Border Style="{DynamicResource SurfaceStyle}" Padding="6">
+            <Entry
+                x:Name="NotesEditor"
+                Placeholder="Notes"
+                HeightRequest="100"
+                Text="{Binding Notes}"
+                FontSize="13"
+                ReturnType="Done"
+    Completed="OnEntryCompleted"
+                TextColor="{AppThemeBinding Light={DynamicResource TextSecondaryLight}, Dark={DynamicResource TextSecondaryDark}}"/>
+        </Border>
+
+        <!-- Список медикаментов -->
+        <Label
+            Text="{x:Static local:AppResources.Medications}"
+            Style="{DynamicResource SecondaryTextStyle}"
+            Margin="0,10,0,0"/>
+           
+
+            <CollectionView
+    ItemsSource="{Binding Medications}"
+    SelectionMode="None"
+    HorizontalOptions="Fill">
                 <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                        <HorizontalStackLayout Spacing="10" VerticalOptions="Center" HorizontalOptions="Fill">
-                            <Entry Placeholder="Medication"
-                                   Text="{Binding Name}"
-                                   WidthRequest="150"/>
-                            <Entry Placeholder="Dose"
-                                   Keyboard="Numeric"
-                                   Text="{Binding Dose}"
-                                   WidthRequest="80"/>
-                            <Button Text="X"
-                                    BackgroundColor="Transparent"
-                                    TextColor="Red"
-                                    Command="{Binding Source={RelativeSource AncestorType={x:Type toolkit:Popup}}, Path=BindingContext.RemoveMedicationCommand}"
-                                    CommandParameter="{Binding}" />
-                        </HorizontalStackLayout>
+                    <DataTemplate x:DataType="models:MedicationInput">
+                        <Grid ColumnDefinitions="*,80,40" RowDefinitions="Auto" VerticalOptions="Center" ColumnSpacing="10">
+
+                            <!-- Название медикамента -->
+                            <Border Grid.Column="0" Style="{DynamicResource SurfaceStyle}" Padding="2">
+                                <Entry
+                        Placeholder="Medication"
+                        Text="{Binding Name}"
+                        ReturnType="Done"
+                        Completed="OnEntryCompleted"/>
+                            </Border>
+
+                            <!-- Доза -->
+                            <Border Grid.Column="1" Style="{DynamicResource SurfaceStyle}" Padding="2">
+                                <Entry
+                        Placeholder="Dose"
+                        Keyboard="Numeric"
+                        Text="{Binding Dose}"
+                        ReturnType="Done"
+                        Completed="OnEntryCompleted"/>
+                            </Border>
+
+                            <!-- Крестик удалить -->
+                            <ImageButton
+                    Grid.Column="2"
+                     Source="close.svg"
+                               
+    BackgroundColor="Transparent"
+      HorizontalOptions="Center"
+    VerticalOptions="Center"
+                    Command="{Binding Source={x:Reference ThisPopup}, Path=BindingContext.RemoveMedicationCommand}"
+                    CommandParameter="{Binding}"
+                    WidthRequest="30"
+                    HeightRequest="30"/>
+                        </Grid>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
 
-            <!-- Кнопка добавить медикамент -->
-            <Button Text="{x:Static local:AppResources.AddMedication}"
-                    Command="{Binding AddMedicationCommand}"
-                    Margin="0,5,0,10"/>
+            <!-- Кнопки добавить/сохранить/отмена -->
+        <Grid WidthRequest="260" RowDefinitions="Auto,Auto" RowSpacing="10" HorizontalOptions="Center">
+            <Button
+                Grid.Row="0"
+                Text="{x:Static local:AppResources.AddMedication}"
+                Command="{Binding AddMedicationCommand}"
+                Style="{DynamicResource SecondaryButtonStyle}"
+                HorizontalOptions="Fill"/>
+            <Grid Grid.Row="1" ColumnDefinitions="*,*" ColumnSpacing="10">
+                <Button
+                    Text="{x:Static local:AppResources.SaveButton}"
+                    Command="{Binding SaveCommand}"
+                    Style="{DynamicResource PrimaryButtonStyle}"
+                    Grid.Column="0"
+                    HorizontalOptions="Fill"/>
+                <Button
+                    Text="{x:Static local:AppResources.CancelButton}"
+                    Command="{Binding CancelCommand}"
+                    Style="{DynamicResource SecondaryButtonStyle}"
+                    Grid.Column="1"
+                    HorizontalOptions="Fill"/>
+            </Grid>
+        </Grid>
 
-            <!-- Кнопки сохранить / отменить -->
-            <HorizontalStackLayout Spacing="20" HorizontalOptions="Center">
-                <Button Text="{x:Static local:AppResources.SaveButton}"
-                        Command="{Binding SaveCommand}" WidthRequest="120"/>
-                <Button Text="{x:Static local:AppResources.CancelButton}"
-                        Command="{Binding CancelCommand}" WidthRequest="120"/>
-            </HorizontalStackLayout>
-
-        </VerticalStackLayout>
-    </ScrollView>
+ 
+    </VerticalStackLayout>
+    </Grid>
 </toolkit:Popup>

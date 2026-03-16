@@ -12,5 +12,7 @@ namespace HeadacheTracker.Domain.Abstractions
         Task DeleteByHeadacheIdAsync(int headacheId);
         
         Task UpdateAsync(MedicationEntry entry);
+        Task<List<MedicationEntry>> GetByDateAsync(DateTime date);
+
     }
 }

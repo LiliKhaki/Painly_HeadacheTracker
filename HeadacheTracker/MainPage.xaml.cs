@@ -1,5 +1,5 @@
-﻿using Microsoft.Maui.Controls;
-
+﻿ using Microsoft.Maui.Controls;
+ 
 using HeadacheTracker.Maui.ViewModels;
 
 namespace HeadacheTracker.Maui

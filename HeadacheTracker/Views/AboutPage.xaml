@@ -1,0 +1,100 @@
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:res="clr-namespace:HeadacheTracker.Maui.Resources.Strings"
+    xmlns:vm="clr-namespace:HeadacheTracker.Maui.Views"
+    x:Class="HeadacheTracker.Maui.Views.AboutPage"
+    x:DataType="vm:AboutPage"
+    Title="{x:Static res:AppResources.About_Title}">
+
+    <ScrollView>
+
+        <VerticalStackLayout
+            Padding="20"
+            Spacing="22"
+            BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundLight}, Dark={DynamicResource BackgroundDark}}">
+
+            <!-- ===== Title ===== -->
+            <Label 
+                Text="{x:Static res:AppResources.About_Title}"
+                Style="{StaticResource TitleTextStyle}" />
+
+            <Label 
+                Text="{x:Static res:AppResources.About_Subtitle}"
+                Style="{StaticResource SecondaryTextStyle}" />
+
+            <!-- ===== About Card ===== -->
+            <Border Style="{StaticResource SurfaceStyle}">
+                <VerticalStackLayout Padding="16" Spacing="12">
+
+                    <Label 
+                        Text="{x:Static res:AppResources.About_Intro}"
+                        Style="{StaticResource PrimaryTextStyle}" 
+                        LineBreakMode="WordWrap" />
+
+                    <Label 
+                        Text="{x:Static res:AppResources.About_Design}"
+                        Style="{StaticResource PrimaryTextStyle}" 
+                        LineBreakMode="WordWrap" />
+
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- ===== Privacy Section ===== -->
+            <VerticalStackLayout Spacing="8">
+
+                <Label 
+                    Text="{x:Static res:AppResources.Privacy_Title}"
+                    Style="{StaticResource SectionHeaderTextStyle}" />
+
+                <Border Style="{StaticResource SurfaceStyle}">
+                    <Label 
+                        Padding="16"
+                        Text="{x:Static res:AppResources.Privacy_Text}"
+                        Style="{StaticResource PrimaryTextStyle}"
+                        LineBreakMode="WordWrap"/>
+                </Border>
+
+            </VerticalStackLayout>
+
+            <!-- ===== Support Section ===== -->
+            <VerticalStackLayout Spacing="8">
+
+                <Label 
+                    Text="{x:Static res:AppResources.Support_Title}"
+                    Style="{StaticResource SectionHeaderTextStyle}" />
+
+                <Border Style="{StaticResource SurfaceStyle}">
+                    <VerticalStackLayout Padding="16" Spacing="14">
+
+                        <Label 
+                            Text="{x:Static res:AppResources.Support_Text}"
+                            Style="{StaticResource PrimaryTextStyle}" 
+                            LineBreakMode="WordWrap"/>
+
+                        <Button
+                            Text="{x:Static res:AppResources.Support_Button}"
+                            Style="{StaticResource PrimaryButtonStyle}"
+                            Command="{Binding OpenSupportCommand}"/>
+
+                        <Button
+    Text="{x:Static res:AppResources.Feedback_Button}"
+    Style="{StaticResource PrimaryButtonStyle}"
+    Command="{Binding OpenBugReportFormCommand}" />
+
+                    </VerticalStackLayout>
+                </Border>
+
+            </VerticalStackLayout>
+
+            <!-- ===== Version ===== -->
+            <Label
+    HorizontalOptions="Center"
+    Style="{StaticResource SecondaryTextStyle}"
+    Text="{Binding AppVersion}" />
+
+        </VerticalStackLayout>
+
+    </ScrollView>
+
+</ContentPage>
