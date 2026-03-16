@@ -1,3 +1,5 @@
+![Banner](Screenshots/banner.png)
+
 # HeadacheTracker
 
 HeadacheTracker is a .NET MAUI application for tracking headache episodes. The app allows users to:
